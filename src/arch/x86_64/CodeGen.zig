@@ -166724,6 +166724,33 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .{ ._, ._, .@"test", .src0p, .src0p, ._, ._ },
                     } },
                 }, .{
+                    .required_features = .{ .avx, null, null, null },
+                    .src_constraints = .{ .any_int, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .call_frame = .{ .alignment = .@"32" },
+                    .extra_temps = .{
+                        .{ .type = .usize, .kind = .{ .param_gpr = .{ .cc = .zigcc, .after = 0, .at = 0 } } },
+                        .{ .type = .usize, .kind = .{ .lazy_sym = .{ .kind = .code, .ref = .src0 } } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .{ .cc = .nz }, .unused },
+                    .clobbers = .{ .eflags = true, .caller_preserved = .zigcc },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .lea, .tmp0p, .mem(.src0), ._, ._ },
+                        .{ ._, ._, .call, .tmp1d, ._, ._, ._ },
+                        .{ ._, ._, .@"test", .tmp0p, .tmp0p, ._, ._ },
+                    } },
+                }, .{
                     .required_features = .{ .sse, null, null, null },
                     .src_constraints = .{ .{ .int = .gpr }, .any, .any },
                     .patterns = &.{
@@ -166750,6 +166777,33 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .{ ._, ._, .@"test", .src0p, .src0p, ._, ._ },
                     } },
                 }, .{
+                    .required_features = .{ .sse, null, null, null },
+                    .src_constraints = .{ .any_int, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .call_frame = .{ .alignment = .@"16" },
+                    .extra_temps = .{
+                        .{ .type = .usize, .kind = .{ .param_gpr = .{ .cc = .zigcc, .after = 0, .at = 0 } } },
+                        .{ .type = .usize, .kind = .{ .lazy_sym = .{ .kind = .code, .ref = .src0 } } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .{ .cc = .nz }, .unused },
+                    .clobbers = .{ .eflags = true, .caller_preserved = .zigcc },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .lea, .tmp0p, .mem(.src0), ._, ._ },
+                        .{ ._, ._, .call, .tmp1d, ._, ._, ._ },
+                        .{ ._, ._, .@"test", .tmp0p, .tmp0p, ._, ._ },
+                    } },
+                }, .{
                     .src_constraints = .{ .{ .int = .gpr }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .{ .to_param_gpr = .{ .cc = .zigcc, .after = 0, .at = 0 } }, .none, .none } },
@@ -166773,6 +166827,32 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .each = .{ .once = &.{
                         .{ ._, ._, .call, .tmp0d, ._, ._, ._ },
                         .{ ._, ._, .@"test", .src0p, .src0p, ._, ._ },
+                    } },
+                }, .{
+                    .src_constraints = .{ .any_int, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .call_frame = .{ .alignment = .@"8" },
+                    .extra_temps = .{
+                        .{ .type = .usize, .kind = .{ .param_gpr = .{ .cc = .zigcc, .after = 0, .at = 0 } } },
+                        .{ .type = .usize, .kind = .{ .lazy_sym = .{ .kind = .code, .ref = .src0 } } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .{ .cc = .nz }, .unused },
+                    .clobbers = .{ .eflags = true, .caller_preserved = .zigcc },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .lea, .tmp0p, .mem(.src0), ._, ._ },
+                        .{ ._, ._, .call, .tmp1d, ._, ._, ._ },
+                        .{ ._, ._, .@"test", .tmp0p, .tmp0p, ._, ._ },
                     } },
                 } }) catch |err| switch (err) {
                     error.SelectFailed => return cg.fail("failed to select {s} {f} {f}", .{
@@ -166814,6 +166894,32 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .{ ._, ._, .call, .tmp0d, ._, ._, ._ },
                     } },
                 }, .{
+                    .required_features = .{ .avx, null, null, null },
+                    .src_constraints = .{ .any_int, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .call_frame = .{ .alignment = .@"32" },
+                    .extra_temps = .{
+                        .{ .type = .usize, .kind = .{ .lazy_sym = .{ .kind = .code, .ref = .src0 } } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .{ .ret_gpr_pair = .{ .cc = .zigcc, .after = 0, .at = 0 } }, .unused },
+                    .clobbers = .{ .eflags = true, .caller_preserved = .zigcc },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .lea, .dst0p0, .mem(.src0), ._, ._ },
+                        .{ ._, ._, .call, .tmp0d, ._, ._, ._ },
+                    } },
+                }, .{
                     .required_features = .{ .sse, null, null, null },
                     .src_constraints = .{ .{ .int = .gpr }, .any, .any },
                     .patterns = &.{
@@ -166836,6 +166942,32 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .{ .ret_gpr = .{ .cc = .zigcc, .after = 1, .at = 1 } }, .unused },
                     .clobbers = .{ .eflags = true, .caller_preserved = .zigcc },
                     .each = .{ .once = &.{
+                        .{ ._, ._, .call, .tmp0d, ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .sse, null, null, null },
+                    .src_constraints = .{ .any_int, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .call_frame = .{ .alignment = .@"16" },
+                    .extra_temps = .{
+                        .{ .type = .usize, .kind = .{ .lazy_sym = .{ .kind = .code, .ref = .src0 } } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .{ .ret_gpr_pair = .{ .cc = .zigcc, .after = 0, .at = 0 } }, .unused },
+                    .clobbers = .{ .eflags = true, .caller_preserved = .zigcc },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .lea, .dst0p0, .mem(.src0), ._, ._ },
                         .{ ._, ._, .call, .tmp0d, ._, ._, ._ },
                     } },
                 }, .{
@@ -166862,6 +166994,32 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .each = .{ .once = &.{
                         .{ ._, ._, .call, .tmp0d, ._, ._, ._ },
                     } },
+                }, .{
+                    .required_features = .{ .sse, null, null, null },
+                    .src_constraints = .{ .any_int, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .call_frame = .{ .alignment = .@"8" },
+                    .extra_temps = .{
+                        .{ .type = .usize, .kind = .{ .lazy_sym = .{ .kind = .code, .ref = .src0 } } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .{ .ret_gpr_pair = .{ .cc = .zigcc, .after = 0, .at = 0 } }, .unused },
+                    .clobbers = .{ .eflags = true, .caller_preserved = .zigcc },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .lea, .dst0p0, .mem(.src0), ._, ._ },
+                        .{ ._, ._, .call, .tmp0d, ._, ._, ._ },
+                    } },
                 } }) catch |err| switch (err) {
                     error.SelectFailed => return cg.fail("failed to select {s} {f} {f}", .{
                         @tagName(air_tag),
@@ -166870,7 +167028,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     }),
                     else => |e| return e,
                 };
-                try ops[0].toPair(&res[0], cg);
+                if (res[0].tracking(cg).short != .register_pair) try ops[0].toPair(&res[0], cg);
                 try res[0].finish(inst, &.{un_op}, &ops, cg);
             },
             .error_name => |air_tag| {
@@ -169241,32 +169399,43 @@ fn genLazy(cg: *CodeGen, lazy_sym: link.File.LazySymbol) InnerError!void {
             const enum_ty: Type = .fromInterned(lazy_sym.ty);
             wip_mir_log.debug("{f}.@tagName:", .{enum_ty.fmt(pt)});
 
-            const param_regs = abi.getCAbiIntParamRegs(.auto);
-            const param_locks = cg.register_manager.lockRegsAssumeUnused(2, param_regs[0..2].*);
-            defer for (param_locks) |lock| cg.register_manager.unlockReg(lock);
+            const ret_regs = abi.getCAbiIntReturnRegs(.auto)[0..2].*;
+            const ret_locks = cg.register_manager.lockRegsAssumeUnused(2, ret_regs);
+            defer for (ret_locks) |lock| cg.register_manager.unlockReg(lock);
 
-            const ret_mcv: MCValue = .{ .register_pair = param_regs[0..2].* };
-            var enum_temp = try cg.tempInit(enum_ty, .{ .register = param_regs[0] });
+            const param_reg = abi.getCAbiIntParamRegs(.auto)[0];
+            const param_lock = cg.register_manager.lockReg(param_reg);
+            defer if (param_lock) |lock| cg.register_manager.unlockReg(lock);
+
+            const ret_mcv: MCValue = .{ .register_pair = ret_regs };
 
             const data_reg = try cg.register_manager.allocReg(null, abi.RegisterClass.gp);
             const data_lock = cg.register_manager.lockRegAssumeUnused(data_reg);
             defer cg.register_manager.unlockReg(data_lock);
-            try cg.genLazySymbolRef(.lea, data_reg, .{ .kind = .const_data, .ty = lazy_sym.ty });
+            try cg.asmRegisterMemory(.{ ._, .lea }, data_reg.to64(), .{
+                .base = .{ .lazy_sym = .{ .kind = .const_data, .ty = lazy_sym.ty } },
+            });
 
             var data_off: i32 = 0;
             const reset_index = cg.next_temp_index;
             const tag_names = ip.loadEnumType(lazy_sym.ty).names;
             for (0..tag_names.len) |tag_index| {
+                var enum_temp = try cg.tempInit(enum_ty, if (enum_ty.abiSize(zcu) <= @as(u4, switch (cg.target.cpu.arch) {
+                    else => unreachable,
+                    .x86 => 4,
+                    .x86_64 => 8,
+                })) .{ .register = param_reg } else .{ .indirect = .{ .reg = param_reg } });
+
                 const tag_name_len = tag_names.get(ip)[tag_index].length(ip);
                 var tag_temp = try cg.tempFromValue(try pt.enumValueFieldIndex(enum_ty, @intCast(tag_index)));
                 const cc_temp = enum_temp.cmpInts(.neq, &tag_temp, cg) catch |err| switch (err) {
                     error.SelectFailed => unreachable,
                     else => |e| return e,
                 };
+                try enum_temp.die(cg);
                 try tag_temp.die(cg);
                 const skip_reloc = try cg.asmJccReloc(cc_temp.tracking(cg).short.eflags, undefined);
                 try cc_temp.die(cg);
-                try cg.resetTemps(reset_index);
 
                 try cg.genSetReg(
                     ret_mcv.register_pair[0],
@@ -169280,8 +169449,9 @@ fn genLazy(cg: *CodeGen, lazy_sym: link.File.LazySymbol) InnerError!void {
                 cg.performReloc(skip_reloc);
 
                 data_off += @intCast(tag_name_len + 1);
+
+                try cg.resetTemps(reset_index);
             }
-            try enum_temp.die(cg);
 
             try cg.genSetReg(ret_mcv.register_pair[0], .usize, .{ .immediate = 0 }, .{});
             try cg.asmOpOnly(.{ ._, .ret });
@@ -169290,12 +169460,16 @@ fn genLazy(cg: *CodeGen, lazy_sym: link.File.LazySymbol) InnerError!void {
             const err_ty: Type = .fromInterned(lazy_sym.ty);
             wip_mir_log.debug("{f}.@errorCast:", .{err_ty.fmt(pt)});
 
-            const param_regs = abi.getCAbiIntParamRegs(.auto);
-            const param_locks = cg.register_manager.lockRegsAssumeUnused(2, param_regs[0..2].*);
-            defer for (param_locks) |lock| cg.register_manager.unlockReg(lock);
+            const ret_reg = abi.getCAbiIntReturnRegs(.auto)[0];
+            const ret_lock = cg.register_manager.lockRegAssumeUnused(ret_reg);
+            defer cg.register_manager.unlockReg(ret_lock);
 
-            const ret_mcv: MCValue = .{ .register = param_regs[0] };
-            const err_mcv: MCValue = .{ .register = param_regs[0] };
+            const param_reg = abi.getCAbiIntParamRegs(.auto)[0];
+            const param_lock = cg.register_manager.lockReg(param_reg);
+            defer if (param_lock) |lock| cg.register_manager.unlockReg(lock);
+
+            const ret_mcv: MCValue = .{ .register = ret_reg };
+            const err_mcv: MCValue = .{ .register = param_reg };
             var err_temp = try cg.tempInit(err_ty, err_mcv);
 
             const ExpectedContents = [32]Mir.Inst.Index;
@@ -182010,37 +182184,6 @@ fn genInlineMemset(
     try self.asmOpOnly(.{ .@"rep _sb", .sto });
 }
 
-fn genLazySymbolRef(
-    self: *CodeGen,
-    comptime tag: Mir.Inst.Tag,
-    reg: Register,
-    lazy_sym: link.File.LazySymbol,
-) InnerError!void {
-    if (self.mod.pic) {
-        switch (tag) {
-            .lea, .call => try self.genSetReg(reg, .usize, .{
-                .lea_lazy_sym = lazy_sym,
-            }, .{}),
-            .mov => try self.genSetReg(reg, .usize, .{
-                .lea_lazy_sym = lazy_sym,
-            }, .{}),
-            else => unreachable,
-        }
-        switch (tag) {
-            .lea, .mov => {},
-            .call => try self.asmRegister(.{ ._, .call }, reg),
-            else => unreachable,
-        }
-    } else switch (tag) {
-        .lea, .mov => try self.asmRegisterMemory(.{ ._, tag }, reg.to64(), .{
-            .base = .{ .lazy_sym = lazy_sym },
-            .mod = .{ .rm = .{ .size = .qword } },
-        }),
-        .call => try self.asmImmediate(.{ ._, .call }, .{ .lazy_sym = lazy_sym }),
-        else => unreachable,
-    }
-}
-
 fn airBitCast(self: *CodeGen, inst: Air.Inst.Index) !void {
     const pt = self.pt;
     const zcu = pt.zcu;
@@ -193662,9 +193805,11 @@ const Select = struct {
         const tmp0y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp0y } };
         const tmp0w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp0w }, .imm = 1 };
         const tmp0d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp0d }, .imm = 1 };
+        const tmp0p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp0p }, .imm = 1 };
         const tmp0q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp0q }, .imm = 1 };
         const tmp0w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp0w }, .imm = 2 };
         const tmp0d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp0d }, .imm = 2 };
+        const tmp0p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp0p }, .imm = 2 };
         const tmp0q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp0q }, .imm = 2 };
 
         const tmp1l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1l } };
@@ -193680,9 +193825,11 @@ const Select = struct {
         const tmp1y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1y } };
         const tmp1w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1w }, .imm = 1 };
         const tmp1d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1d }, .imm = 1 };
+        const tmp1p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1p }, .imm = 1 };
         const tmp1q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1q }, .imm = 1 };
         const tmp1w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1w }, .imm = 2 };
         const tmp1d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1d }, .imm = 2 };
+        const tmp1p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1p }, .imm = 2 };
         const tmp1q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp1q }, .imm = 2 };
 
         const tmp2l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2l } };
@@ -193698,9 +193845,11 @@ const Select = struct {
         const tmp2y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2y } };
         const tmp2w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2w }, .imm = 1 };
         const tmp2d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2d }, .imm = 1 };
+        const tmp2p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2p }, .imm = 1 };
         const tmp2q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2q }, .imm = 1 };
         const tmp2w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2w }, .imm = 2 };
         const tmp2d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2d }, .imm = 2 };
+        const tmp2p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2p }, .imm = 2 };
         const tmp2q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp2q }, .imm = 2 };
 
         const tmp3l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3l } };
@@ -193716,9 +193865,11 @@ const Select = struct {
         const tmp3y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3y } };
         const tmp3w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3w }, .imm = 1 };
         const tmp3d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3d }, .imm = 1 };
+        const tmp3p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3p }, .imm = 1 };
         const tmp3q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3q }, .imm = 1 };
         const tmp3w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3w }, .imm = 2 };
         const tmp3d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3d }, .imm = 2 };
+        const tmp3p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3p }, .imm = 2 };
         const tmp3q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp3q }, .imm = 2 };
 
         const tmp4l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4l } };
@@ -193734,9 +193885,11 @@ const Select = struct {
         const tmp4y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4y } };
         const tmp4w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4w }, .imm = 1 };
         const tmp4d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4d }, .imm = 1 };
+        const tmp4p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4p }, .imm = 1 };
         const tmp4q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4q }, .imm = 1 };
         const tmp4w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4w }, .imm = 2 };
         const tmp4d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4d }, .imm = 2 };
+        const tmp4p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4p }, .imm = 2 };
         const tmp4q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp4q }, .imm = 2 };
 
         const tmp5l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5l } };
@@ -193752,9 +193905,11 @@ const Select = struct {
         const tmp5y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5y } };
         const tmp5w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5w }, .imm = 1 };
         const tmp5d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5d }, .imm = 1 };
+        const tmp5p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5p }, .imm = 1 };
         const tmp5q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5q }, .imm = 1 };
         const tmp5w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5w }, .imm = 2 };
         const tmp5d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5d }, .imm = 2 };
+        const tmp5p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5p }, .imm = 2 };
         const tmp5q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp5q }, .imm = 2 };
 
         const tmp6l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6l } };
@@ -193770,9 +193925,11 @@ const Select = struct {
         const tmp6y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6y } };
         const tmp6w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6w }, .imm = 1 };
         const tmp6d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6d }, .imm = 1 };
+        const tmp6p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6p }, .imm = 1 };
         const tmp6q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6q }, .imm = 1 };
         const tmp6w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6w }, .imm = 2 };
         const tmp6d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6d }, .imm = 2 };
+        const tmp6p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6p }, .imm = 2 };
         const tmp6q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp6q }, .imm = 2 };
 
         const tmp7l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7l } };
@@ -193788,9 +193945,11 @@ const Select = struct {
         const tmp7y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7y } };
         const tmp7w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7w }, .imm = 1 };
         const tmp7d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7d }, .imm = 1 };
+        const tmp7p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7p }, .imm = 1 };
         const tmp7q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7q }, .imm = 1 };
         const tmp7w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7w }, .imm = 2 };
         const tmp7d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7d }, .imm = 2 };
+        const tmp7p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7p }, .imm = 2 };
         const tmp7q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp7q }, .imm = 2 };
 
         const tmp8l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8l } };
@@ -193806,9 +193965,11 @@ const Select = struct {
         const tmp8y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8y } };
         const tmp8w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8w }, .imm = 1 };
         const tmp8d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8d }, .imm = 1 };
+        const tmp8p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8p }, .imm = 1 };
         const tmp8q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8q }, .imm = 1 };
         const tmp8w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8w }, .imm = 2 };
         const tmp8d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8d }, .imm = 2 };
+        const tmp8p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8p }, .imm = 2 };
         const tmp8q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp8q }, .imm = 2 };
 
         const tmp9l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9l } };
@@ -193824,9 +193985,11 @@ const Select = struct {
         const tmp9y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9y } };
         const tmp9w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9w }, .imm = 1 };
         const tmp9d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9d }, .imm = 1 };
+        const tmp9p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9p }, .imm = 1 };
         const tmp9q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9q }, .imm = 1 };
         const tmp9w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9w }, .imm = 2 };
         const tmp9d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9d }, .imm = 2 };
+        const tmp9p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9p }, .imm = 2 };
         const tmp9q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp9q }, .imm = 2 };
 
         const tmp10l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10l } };
@@ -193842,9 +194005,11 @@ const Select = struct {
         const tmp10y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10y } };
         const tmp10w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10w }, .imm = 1 };
         const tmp10d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10d }, .imm = 1 };
+        const tmp10p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10p }, .imm = 1 };
         const tmp10q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10q }, .imm = 1 };
         const tmp10w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10w }, .imm = 2 };
         const tmp10d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10d }, .imm = 2 };
+        const tmp10p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10p }, .imm = 2 };
         const tmp10q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .tmp10q }, .imm = 2 };
 
         const dst0l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0l } };
@@ -193860,9 +194025,11 @@ const Select = struct {
         const dst0y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0y } };
         const dst0w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0w }, .imm = 1 };
         const dst0d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0d }, .imm = 1 };
+        const dst0p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0p }, .imm = 1 };
         const dst0q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0q }, .imm = 1 };
         const dst0w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0w }, .imm = 2 };
         const dst0d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0d }, .imm = 2 };
+        const dst0p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0p }, .imm = 2 };
         const dst0q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst0q }, .imm = 2 };
 
         const dst1l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1l } };
@@ -193878,9 +194045,11 @@ const Select = struct {
         const dst1y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1y } };
         const dst1w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1w }, .imm = 1 };
         const dst1d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1d }, .imm = 1 };
+        const dst1p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1p }, .imm = 1 };
         const dst1q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1q }, .imm = 1 };
         const dst1w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1w }, .imm = 2 };
         const dst1d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1d }, .imm = 2 };
+        const dst1p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1p }, .imm = 2 };
         const dst1q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .dst1q }, .imm = 2 };
 
         const src0l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0l } };
@@ -193896,9 +194065,11 @@ const Select = struct {
         const src0y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0y } };
         const src0w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0w }, .imm = 1 };
         const src0d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0d }, .imm = 1 };
+        const src0p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0p }, .imm = 1 };
         const src0q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0q }, .imm = 1 };
         const src0w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0w }, .imm = 2 };
         const src0d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0d }, .imm = 2 };
+        const src0p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0p }, .imm = 2 };
         const src0q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src0q }, .imm = 2 };
 
         const src1l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1l } };
@@ -193914,9 +194085,11 @@ const Select = struct {
         const src1y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1y } };
         const src1w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1w }, .imm = 1 };
         const src1d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1d }, .imm = 1 };
+        const src1p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1p }, .imm = 1 };
         const src1q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1q }, .imm = 1 };
         const src1w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1w }, .imm = 2 };
         const src1d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1d }, .imm = 2 };
+        const src1p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1p }, .imm = 2 };
         const src1q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src1q }, .imm = 2 };
 
         const src2l: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2l } };
@@ -193932,9 +194105,11 @@ const Select = struct {
         const src2y: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2y } };
         const src2w0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2w }, .imm = 1 };
         const src2d0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2d }, .imm = 1 };
+        const src2p0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2p }, .imm = 1 };
         const src2q0: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2q }, .imm = 1 };
         const src2w1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2w }, .imm = 2 };
         const src2d1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2d }, .imm = 2 };
+        const src2p1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2p }, .imm = 2 };
         const src2q1: Select.Operand = .{ .flags = .{ .tag = .ref, .base = .src2q }, .imm = 2 };
 
         fn si(imm: i32) Select.Operand {
