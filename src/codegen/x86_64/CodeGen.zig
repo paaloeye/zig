@@ -182106,68 +182106,135 @@ fn genSetMem(
     }
 }
 
-fn genInlineMemcpy(self: *CodeGen, dst_ptr: MCValue, src_ptr: MCValue, len: MCValue, opts: struct {
+fn genInlineMemcpy(cg: *CodeGen, dst_ptr: MCValue, src_ptr: MCValue, len: MCValue, opts: struct {
     no_alias: bool,
 }) InnerError!void {
-    if (opts.no_alias and dst_ptr.isAddress() and src_ptr.isAddress()) switch (len) {
-        else => {},
-        .immediate => |len_imm| switch (len_imm) {
-            else => {},
-            1 => if (self.register_manager.tryAllocReg(null, abi.RegisterClass.gp)) |reg| {
-                try self.asmRegisterMemory(.{ ._, .mov }, reg.to8(), try src_ptr.deref().mem(self, .{ .size = .byte }));
-                try self.asmMemoryRegister(.{ ._, .mov }, try dst_ptr.deref().mem(self, .{ .size = .byte }), reg.to8());
-                return;
-            },
-            2 => if (self.register_manager.tryAllocReg(null, abi.RegisterClass.gp)) |reg| {
-                try self.asmRegisterMemory(.{ ._, .mov }, reg.to16(), try src_ptr.deref().mem(self, .{ .size = .word }));
-                try self.asmMemoryRegister(.{ ._, .mov }, try dst_ptr.deref().mem(self, .{ .size = .word }), reg.to16());
-                return;
-            },
-            4 => if (self.register_manager.tryAllocReg(null, abi.RegisterClass.gp)) |reg| {
-                try self.asmRegisterMemory(.{ ._, .mov }, reg.to32(), try src_ptr.deref().mem(self, .{ .size = .dword }));
-                try self.asmMemoryRegister(.{ ._, .mov }, try dst_ptr.deref().mem(self, .{ .size = .dword }), reg.to32());
-                return;
-            },
-            8 => if (self.target.cpu.arch == .x86_64) {
-                if (self.register_manager.tryAllocReg(null, abi.RegisterClass.gp)) |reg| {
-                    try self.asmRegisterMemory(.{ ._, .mov }, reg.to64(), try src_ptr.deref().mem(self, .{ .size = .qword }));
-                    try self.asmMemoryRegister(.{ ._, .mov }, try dst_ptr.deref().mem(self, .{ .size = .qword }), reg.to64());
-                    return;
-                }
-            },
-            16 => if (self.hasFeature(.avx)) {
-                if (self.register_manager.tryAllocReg(null, abi.RegisterClass.sse)) |reg| {
-                    try self.asmRegisterMemory(.{ .v_dqu, .mov }, reg.to128(), try src_ptr.deref().mem(self, .{ .size = .xword }));
-                    try self.asmMemoryRegister(.{ .v_dqu, .mov }, try dst_ptr.deref().mem(self, .{ .size = .xword }), reg.to128());
-                    return;
-                }
-            } else if (self.hasFeature(.sse2)) {
-                if (self.register_manager.tryAllocReg(null, abi.RegisterClass.sse)) |reg| {
-                    try self.asmRegisterMemory(.{ ._dqu, .mov }, reg.to128(), try src_ptr.deref().mem(self, .{ .size = .xword }));
-                    try self.asmMemoryRegister(.{ ._dqu, .mov }, try dst_ptr.deref().mem(self, .{ .size = .xword }), reg.to128());
-                    return;
-                }
-            } else if (self.hasFeature(.sse)) {
-                if (self.register_manager.tryAllocReg(null, abi.RegisterClass.sse)) |reg| {
-                    try self.asmRegisterMemory(.{ ._ps, .movu }, reg.to128(), try src_ptr.deref().mem(self, .{ .size = .xword }));
-                    try self.asmMemoryRegister(.{ ._ps, .movu }, try dst_ptr.deref().mem(self, .{ .size = .xword }), reg.to128());
-                    return;
-                }
-            },
-            32 => if (self.hasFeature(.avx)) {
-                if (self.register_manager.tryAllocReg(null, abi.RegisterClass.sse)) |reg| {
-                    try self.asmRegisterMemory(.{ .v_dqu, .mov }, reg.to256(), try src_ptr.deref().mem(self, .{ .size = .yword }));
-                    try self.asmMemoryRegister(.{ .v_dqu, .mov }, try dst_ptr.deref().mem(self, .{ .size = .yword }), reg.to256());
-                    return;
-                }
-            },
-        },
+    if (opts.no_alias and len == .immediate and cg.useConstMemcpyForSize(len.immediate)) {
+        if (try cg.genConstMemcpy(dst_ptr, src_ptr, len.immediate)) {
+            return;
+        }
+    }
+
+    try cg.spillRegisters(&.{ .rsi, .rdi, .rcx });
+    try cg.genSetReg(.rsi, .usize, src_ptr, .{});
+    try cg.genSetReg(.rdi, .usize, dst_ptr, .{});
+    try cg.genSetReg(.rcx, .usize, len, .{});
+    try cg.asmOpOnly(.{ .@"rep _sb", .mov });
+}
+
+/// Returns `true` iff it would be efficient to use `genConstMemcpy` for a copy
+/// of `len` bytes instead of using `rep movsb`.
+fn useConstMemcpyForSize(cg: *CodeGen, len: u64) bool {
+    // LLVM's threshold here is 8 load/store pairs. However, after that threshold, it typically
+    // calls through to `memcpy` instead of emitting `rep movsb`; if we don't have the `fsrm` CPU
+    // feature, `rep movsb` has a high startup cost, so is inefficient for small copies. Since we
+    // don't currently call compiler_rt in the case of longer copies, we use a higher threshold if
+    // we don't have the `fsrm` feature.
+    return switch (len) {
+        0...128 => true,
+        129...256 => cg.hasFeature(.avx) or !cg.hasFeature(.fsrm), // if we have AVX, each pair is 32 bytes
+        257...512 => !cg.hasFeature(.fsrm), // the threshold should probably be higher, but I'm being cautious
+        else => false,
     };
-    try self.spillRegisters(&.{ .rsi, .rdi, .rcx });
-    try self.genSetReg(.rsi, .usize, src_ptr, .{});
-    try self.genSetReg(.rdi, .usize, dst_ptr, .{});
-    try self.genSetReg(.rcx, .usize, len, .{});
-    try self.asmOpOnly(.{ .@"rep _sb", .mov });
+}
+/// If we can trivially copy `len` bytes from `orig_src_ptr` to `dst_ptr` using simple loads and
+/// stored through already-free register[s] (i.e. without spilling anything), emits that code and
+/// returns `true`. Otherwise, returns `false`, and the caller must lower the operation themselves,
+/// for instance with `rep movsb`.
+fn genConstMemcpy(
+    cg: *CodeGen,
+    dst_ptr: MCValue,
+    orig_src_ptr: MCValue,
+    len: u64,
+) !bool {
+    if (!dst_ptr.isAddress()) return false;
+
+    const src_reg: ?Register = r: {
+        if (orig_src_ptr.isAddress()) break :r null;
+        if (orig_src_ptr == .lea_uav or orig_src_ptr == .lea_nav) {
+            // To "hack around linker relocation bugs", a `lea_uav` isn't considered an address, but
+            // we want to avoid pessimising that case because it's common (e.g. returning constant
+            // values over 8 bytes). So if there's a register free, load the source address into it.
+            if (cg.register_manager.tryAllocReg(null, abi.RegisterClass.gp)) |src_reg| {
+                // We'll actually do the load a little later, in case another register alloc fails.
+                break :r src_reg;
+            }
+        }
+        return false;
+    };
+
+    // Prevent `src_reg` from aliasing `gp_reg` below.
+    const src_lock: ?RegisterLock = if (src_reg) |r| cg.register_manager.lockReg(r) else null;
+    defer if (src_lock) |l| cg.register_manager.unlockReg(l);
+
+    const want_sse_reg = len >= 16 and cg.hasFeature(.sse);
+    const sse_reg: ?Register = if (want_sse_reg) r: {
+        break :r cg.register_manager.tryAllocReg(null, abi.RegisterClass.sse);
+    } else null;
+
+    const need_gp_reg = len % 16 != 0 or sse_reg == null;
+    const gp_reg: Register = if (need_gp_reg) r: {
+        break :r cg.register_manager.tryAllocReg(null, abi.RegisterClass.gp) orelse return false;
+    } else undefined;
+
+    const src_ptr: MCValue = src_ptr: {
+        const reg = src_reg orelse break :src_ptr orig_src_ptr;
+        try cg.asmRegisterMemory(.{ ._, .lea }, reg.to64(), switch (orig_src_ptr) {
+            .lea_uav => |uav| .{ .base = .{ .uav = uav } },
+            .lea_nav => |nav| .{ .base = .{ .nav = nav } },
+            else => unreachable,
+        });
+        break :src_ptr .{ .register = reg.to64() };
+    };
+
+    var offset: u64 = 0;
+
+    if (sse_reg) |r| {
+        if (cg.hasFeature(.avx)) {
+            try cg.memcpyPart(dst_ptr, src_ptr, len, &offset, .{ .v_dqu, .mov }, r, .yword);
+            try cg.memcpyPart(dst_ptr, src_ptr, len, &offset, .{ .v_dqu, .mov }, r, .xword);
+        } else if (cg.hasFeature(.sse2)) {
+            try cg.memcpyPart(dst_ptr, src_ptr, len, &offset, .{ ._dqu, .mov }, r, .xword);
+        } else if (cg.hasFeature(.sse)) {
+            try cg.memcpyPart(dst_ptr, src_ptr, len, &offset, .{ ._ps, .movu }, r, .xword);
+        }
+    }
+
+    if (need_gp_reg) {
+        try cg.memcpyPart(dst_ptr, src_ptr, len, &offset, .{ ._, .mov }, gp_reg, .qword);
+        try cg.memcpyPart(dst_ptr, src_ptr, len, &offset, .{ ._, .mov }, gp_reg, .dword);
+        try cg.memcpyPart(dst_ptr, src_ptr, len, &offset, .{ ._, .mov }, gp_reg, .word);
+        try cg.memcpyPart(dst_ptr, src_ptr, len, &offset, .{ ._, .mov }, gp_reg, .byte);
+    }
+
+    assert(offset == len);
+
+    return true;
+}
+fn memcpyPart(
+    cg: *CodeGen,
+    dst_ptr: MCValue,
+    src_ptr: MCValue,
+    len: u64,
+    offset: *u64,
+    tag: Mir.Inst.FixedTag,
+    temp_reg: Register,
+    size: Memory.Size,
+) !void {
+    const bytes_len = @divExact(size.bitSize(cg.target), 8);
+    while (len - offset.* >= bytes_len) {
+        try cg.asmRegisterMemory(
+            tag,
+            temp_reg.toSize(size, cg.target),
+            try src_ptr.deref().mem(cg, .{ .size = size, .disp = @intCast(offset.*) }),
+        );
+        try cg.asmMemoryRegister(
+            tag,
+            try dst_ptr.deref().mem(cg, .{ .size = size, .disp = @intCast(offset.*) }),
+            temp_reg.toSize(size, cg.target),
+        );
+        offset.* += bytes_len;
+    }
 }
 
 fn genInlineMemset(
@@ -186834,10 +186901,8 @@ const Temp = struct {
             },
             .memory, .indirect, .load_frame, .load_nav, .load_uav, .load_lazy_sym => {
                 var val_ptr = try cg.tempInit(.usize, val_mcv.address());
-                var len = try cg.tempInit(.usize, .{ .immediate = val_ty.abiSize(cg.pt.zcu) });
-                try val_ptr.memcpy(ptr, &len, cg);
+                try val_ptr.memcpy(ptr, val_ty.abiSize(cg.pt.zcu), cg);
                 try val_ptr.die(cg);
-                try len.die(cg);
             },
         }
         return val;
@@ -186939,10 +187004,8 @@ const Temp = struct {
                 .lea_frame, .lea_nav, .lea_uav, .lea_lazy_sym => continue :val_to_gpr,
                 .memory, .indirect, .load_frame, .load_nav, .load_uav, .load_lazy_sym => {
                     var val_ptr = try cg.tempInit(.usize, val_mcv.address());
-                    var len = try cg.tempInit(.usize, .{ .immediate = val_ty.abiSize(cg.pt.zcu) });
-                    try ptr.memcpy(&val_ptr, &len, cg);
+                    try ptr.memcpy(&val_ptr, val_ty.abiSize(cg.pt.zcu), cg);
                     try val_ptr.die(cg);
-                    try len.die(cg);
                 },
             }
             break;
@@ -186981,11 +187044,9 @@ const Temp = struct {
                 var val_ptr = try cg.tempInit(.usize, val_mcv.address());
                 var src_ptr =
                     try cg.tempInit(.usize, src.tracking(cg).short.address().offset(opts.disp));
-                var len = try cg.tempInit(.usize, .{ .immediate = val_ty.abiSize(cg.pt.zcu) });
-                try val_ptr.memcpy(&src_ptr, &len, cg);
+                try val_ptr.memcpy(&src_ptr, val_ty.abiSize(cg.pt.zcu), cg);
                 try val_ptr.die(cg);
                 try src_ptr.die(cg);
-                try len.die(cg);
             },
         }
     }
@@ -187076,11 +187137,9 @@ const Temp = struct {
                     var dst_ptr =
                         try cg.tempInit(.usize, dst.tracking(cg).short.address().offset(opts.disp));
                     var val_ptr = try cg.tempInit(.usize, val_mcv.address());
-                    var len = try cg.tempInit(.usize, .{ .immediate = val_ty.abiSize(cg.pt.zcu) });
-                    try dst_ptr.memcpy(&val_ptr, &len, cg);
+                    try dst_ptr.memcpy(&val_ptr, val_ty.abiSize(cg.pt.zcu), cg);
                     try dst_ptr.die(cg);
                     try val_ptr.die(cg);
-                    try len.die(cg);
                 },
             }
             break;
@@ -187182,10 +187241,8 @@ const Temp = struct {
                 try ptr.toOffset(deferred_disp, cg);
                 deferred_disp = 0;
                 var src_ptr = try cg.tempInit(.usize, .{ .lea_frame = .{ .index = frame_index } });
-                var len = try cg.tempInit(.usize, .{ .immediate = src_abi_size });
-                try ptr.memcpy(&src_ptr, &len, cg);
+                try ptr.memcpy(&src_ptr, src_abi_size, cg);
                 try src_ptr.die(cg);
-                try len.die(cg);
             }
             part_disp += part_size;
             deferred_disp += part_size;
@@ -187224,11 +187281,9 @@ const Temp = struct {
             var dst_ptr = try cg.tempInit(.usize, dst.tracking(cg).short.address());
             try dst_ptr.toOffset(disp, cg);
             var src_ptr = try cg.tempInit(.usize, .{ .lea_frame = .{ .index = frame_index } });
-            var len = try cg.tempInit(.usize, .{ .immediate = src_abi_size });
-            try dst_ptr.memcpy(&src_ptr, &len, cg);
+            try dst_ptr.memcpy(&src_ptr, src_abi_size, cg);
             try dst_ptr.die(cg);
             try src_ptr.die(cg);
-            try len.die(cg);
         }
     }
 
@@ -187273,11 +187328,21 @@ const Temp = struct {
         assert(next_class_index == classes.len);
     }
 
-    fn memcpy(dst: *Temp, src: *Temp, len: *Temp, cg: *CodeGen) InnerError!void {
-        while (true) for ([_]*Temp{ dst, src, len }, [_]Register{ .rdi, .rsi, .rcx }) |temp, reg| {
-            if (try temp.toReg(reg, cg)) break;
-        } else break;
+    fn memcpy(dst: *Temp, src: *Temp, len: u64, cg: *CodeGen) InnerError!void {
+        if (cg.useConstMemcpyForSize(len)) {
+            while (try dst.toLea(cg) or try src.toLea(cg)) {} // `genConstMemcpy` wants these values to be address operands
+            if (try cg.genConstMemcpy(dst.tracking(cg).short, src.tracking(cg).short, len)) {
+                return;
+            }
+        }
+        var temp = try cg.tempAllocReg(.usize, abi.RegisterClass.gp);
+        while (try dst.toReg(.rdi, cg) or
+            try src.toReg(.rsi, cg) or
+            try temp.toReg(.rcx, cg))
+        {}
+        try cg.asmRegisterImmediate(.{ ._, .mov }, .rcx, .{ .unsigned = len });
         try cg.asmOpOnly(.{ .@"rep _sb", .mov });
+        try temp.die(cg);
     }
 
     fn memset(dst: *Temp, val: *Temp, len: *Temp, cg: *CodeGen) InnerError!void {
