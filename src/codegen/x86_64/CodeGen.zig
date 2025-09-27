@@ -2292,7 +2292,7 @@ fn genBodyBlock(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
 }
 
 fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
-    @setEvalBranchQuota(29_500);
+    @setEvalBranchQuota(29_600);
     const pt = cg.pt;
     const zcu = pt.zcu;
     const ip = &zcu.intern_pool;
@@ -59433,9 +59433,9 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .required_features = .{ .mmx, null, null, null },
                         .src_constraints = .{ .{ .size = .qword }, .{ .size = .qword }, .any },
                         .patterns = &.{
-                            .{ .src = .{ .to_mut_mm, .mem, .none } },
-                            .{ .src = .{ .mem, .to_mut_mm, .none }, .commute = .{ 0, 1 } },
-                            .{ .src = .{ .to_mut_mm, .to_mm, .none } },
+                            .{ .src = .{ .to_mut_mmx, .mem, .none } },
+                            .{ .src = .{ .mem, .to_mut_mmx, .none }, .commute = .{ 0, 1 } },
+                            .{ .src = .{ .to_mut_mmx, .to_mmx, .none } },
                         },
                         .dst_temps = .{ .{ .ref = .src0 }, .unused },
                         .each = .{ .once = &.{
@@ -59445,9 +59445,9 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .required_features = .{ .avx, null, null, null },
                         .src_constraints = .{ .{ .size = .xword }, .{ .size = .xword }, .any },
                         .patterns = &.{
-                            .{ .src = .{ .to_xmm, .mem, .none } },
-                            .{ .src = .{ .mem, .to_xmm, .none }, .commute = .{ 0, 1 } },
-                            .{ .src = .{ .to_xmm, .to_xmm, .none } },
+                            .{ .src = .{ .to_sse, .mem, .none } },
+                            .{ .src = .{ .mem, .to_sse, .none }, .commute = .{ 0, 1 } },
+                            .{ .src = .{ .to_sse, .to_sse, .none } },
                         },
                         .dst_temps = .{ .{ .rc = .sse }, .unused },
                         .each = .{ .once = &.{
@@ -59457,9 +59457,9 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .required_features = .{ .sse2, null, null, null },
                         .src_constraints = .{ .{ .size = .xword }, .{ .size = .xword }, .any },
                         .patterns = &.{
-                            .{ .src = .{ .to_mut_xmm, .mem, .none } },
-                            .{ .src = .{ .mem, .to_mut_xmm, .none }, .commute = .{ 0, 1 } },
-                            .{ .src = .{ .to_mut_xmm, .to_xmm, .none } },
+                            .{ .src = .{ .to_mut_sse, .mem, .none } },
+                            .{ .src = .{ .mem, .to_mut_sse, .none }, .commute = .{ 0, 1 } },
+                            .{ .src = .{ .to_mut_sse, .to_sse, .none } },
                         },
                         .dst_temps = .{ .{ .ref = .src0 }, .unused },
                         .each = .{ .once = &.{
@@ -59469,9 +59469,9 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .required_features = .{ .sse, null, null, null },
                         .src_constraints = .{ .{ .size = .xword }, .{ .size = .xword }, .any },
                         .patterns = &.{
-                            .{ .src = .{ .to_mut_xmm, .mem, .none } },
-                            .{ .src = .{ .mem, .to_mut_xmm, .none }, .commute = .{ 0, 1 } },
-                            .{ .src = .{ .to_mut_xmm, .to_xmm, .none } },
+                            .{ .src = .{ .to_mut_sse, .mem, .none } },
+                            .{ .src = .{ .mem, .to_mut_sse, .none }, .commute = .{ 0, 1 } },
+                            .{ .src = .{ .to_mut_sse, .to_sse, .none } },
                         },
                         .dst_temps = .{ .{ .ref = .src0 }, .unused },
                         .each = .{ .once = &.{
@@ -59481,9 +59481,9 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .required_features = .{ .avx2, null, null, null },
                         .src_constraints = .{ .{ .size = .yword }, .{ .size = .yword }, .any },
                         .patterns = &.{
-                            .{ .src = .{ .to_ymm, .mem, .none } },
-                            .{ .src = .{ .mem, .to_ymm, .none }, .commute = .{ 0, 1 } },
-                            .{ .src = .{ .to_ymm, .to_ymm, .none } },
+                            .{ .src = .{ .to_sse, .mem, .none } },
+                            .{ .src = .{ .mem, .to_sse, .none }, .commute = .{ 0, 1 } },
+                            .{ .src = .{ .to_sse, .to_sse, .none } },
                         },
                         .dst_temps = .{ .{ .rc = .sse }, .unused },
                         .each = .{ .once = &.{
@@ -59493,9 +59493,9 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .required_features = .{ .avx, null, null, null },
                         .src_constraints = .{ .{ .size = .yword }, .{ .size = .yword }, .any },
                         .patterns = &.{
-                            .{ .src = .{ .to_ymm, .mem, .none } },
-                            .{ .src = .{ .mem, .to_ymm, .none }, .commute = .{ 0, 1 } },
-                            .{ .src = .{ .to_ymm, .to_ymm, .none } },
+                            .{ .src = .{ .to_sse, .mem, .none } },
+                            .{ .src = .{ .mem, .to_sse, .none }, .commute = .{ 0, 1 } },
+                            .{ .src = .{ .to_sse, .to_sse, .none } },
                         },
                         .dst_temps = .{ .{ .rc = .sse }, .unused },
                         .each = .{ .once = &.{
@@ -64081,6 +64081,16 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                 var ops = try cg.tempsFromOperands(inst, .{ty_op.operand});
                 var res: [1]Temp = undefined;
                 cg.select(&res, &.{ty_op.ty.toType()}, &ops, comptime &.{ .{
+                    .src_constraints = .{ .{ .bool_vec = .byte }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mut_mem, .none, .none } },
+                        .{ .src = .{ .to_mut_gpr, .none, .none } },
+                    },
+                    .dst_temps = .{ .{ .ref = .src0 }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .not, .dst0b, ._, ._, ._ },
+                    } },
+                }, .{
                     .src_constraints = .{ .{ .signed_or_exact_int = .byte }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mut_mem, .none, .none } },
@@ -64100,6 +64110,16 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
                         .{ ._, ._, .xor, .dst0b, .sa(.src0, .add_umax), ._, ._ },
+                    } },
+                }, .{
+                    .src_constraints = .{ .{ .bool_vec = .word }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mut_mem, .none, .none } },
+                        .{ .src = .{ .to_mut_gpr, .none, .none } },
+                    },
+                    .dst_temps = .{ .{ .ref = .src0 }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .not, .dst0w, ._, ._, ._ },
                     } },
                 }, .{
                     .src_constraints = .{ .{ .signed_or_exact_int = .word }, .any, .any },
@@ -64123,6 +64143,16 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .{ ._, ._, .xor, .dst0w, .sa(.src0, .add_umax), ._, ._ },
                     } },
                 }, .{
+                    .src_constraints = .{ .{ .bool_vec = .dword }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mut_mem, .none, .none } },
+                        .{ .src = .{ .to_mut_gpr, .none, .none } },
+                    },
+                    .dst_temps = .{ .{ .ref = .src0 }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .not, .dst0d, ._, ._, ._ },
+                    } },
+                }, .{
                     .src_constraints = .{ .{ .signed_or_exact_int = .dword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mut_mem, .none, .none } },
@@ -64142,6 +64172,17 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
                         .{ ._, ._, .xor, .dst0d, .sa(.src0, .add_umax), ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .@"64bit", null, null, null },
+                    .src_constraints = .{ .{ .bool_vec = .qword }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mut_mem, .none, .none } },
+                        .{ .src = .{ .to_mut_gpr, .none, .none } },
+                    },
+                    .dst_temps = .{ .{ .ref = .src0 }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .not, .dst0q, ._, ._, ._ },
                     } },
                 }, .{
                     .required_features = .{ .@"64bit", null, null, null },
@@ -64168,10 +64209,22 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .mmx, null, null, null },
+                    .src_constraints = .{ .{ .bool_vec = .qword }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mem, .none, .none } },
+                        .{ .src = .{ .to_mmx, .none, .none } },
+                    },
+                    .dst_temps = .{ .{ .rc = .mmx }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, .p_d, .cmpeq, .dst0q, .dst0q, ._, ._ },
+                        .{ ._, .p_, .xor, .dst0q, .src0q, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .mmx, null, null, null },
                     .src_constraints = .{ .{ .signed_or_exact_int = .qword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_mm, .none, .none } },
+                        .{ .src = .{ .to_mmx, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .mmx }, .unused },
                     .each = .{ .once = &.{
@@ -64182,7 +64235,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .mmx, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int = .qword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_mm, .none, .none } },
+                        .{ .src = .{ .to_mut_mmx, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -64204,10 +64257,22 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .avx, null, null, null },
+                    .src_constraints = .{ .{ .bool_vec = .xword }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mem, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
+                    },
+                    .dst_temps = .{ .{ .rc = .sse }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, .vp_q, .cmpeq, .dst0x, .dst0x, .dst0x, ._ },
+                        .{ ._, .vp_, .xor, .dst0x, .dst0x, .src0x, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .signed_or_exact_int = .xword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_xmm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .sse }, .unused },
                     .each = .{ .once = &.{
@@ -64218,7 +64283,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int = .xword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_xmm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -64240,10 +64305,22 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .sse2, null, null, null },
+                    .src_constraints = .{ .{ .bool_vec = .xword }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mem, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
+                    },
+                    .dst_temps = .{ .{ .rc = .sse }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, .p_d, .cmpeq, .dst0x, .dst0x, ._, ._ },
+                        .{ ._, .p_, .xor, .dst0x, .src0x, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .sse2, null, null, null },
                     .src_constraints = .{ .{ .signed_or_exact_int = .xword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_xmm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .sse }, .unused },
                     .each = .{ .once = &.{
@@ -64254,7 +64331,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .sse2, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int = .xword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_xmm, .none, .none } },
+                        .{ .src = .{ .to_mut_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -64276,9 +64353,33 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .sse, null, null, null },
+                    .src_constraints = .{ .{ .bool_vec = .xword }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mut_sse, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
+                        .{ .kind = .{ .umax_mem = .{ .ref = .src0 } } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .{ .ref = .src0 }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .lea, .tmp0p, .mem(.tmp1), ._, ._ },
+                        .{ ._, ._ps, .xor, .dst0x, .lea(.tmp0x), ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .sse, null, null, null },
                     .src_constraints = .{ .{ .int = .xword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_xmm, .none, .none } },
+                        .{ .src = .{ .to_mut_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -64300,10 +64401,22 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .avx2, null, null, null },
+                    .src_constraints = .{ .{ .bool_vec = .yword }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mem, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
+                    },
+                    .dst_temps = .{ .{ .rc = .sse }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, .vp_q, .cmpeq, .dst0y, .dst0y, .dst0y, ._ },
+                        .{ ._, .vp_, .xor, .dst0y, .dst0y, .src0y, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .avx2, null, null, null },
                     .src_constraints = .{ .{ .signed_or_exact_int = .yword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_ymm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .sse }, .unused },
                     .each = .{ .once = &.{
@@ -64314,7 +64427,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .avx2, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int = .yword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_ymm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -64336,10 +64449,22 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .avx, null, null, null },
+                    .src_constraints = .{ .{ .bool_vec = .yword }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mem, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
+                    },
+                    .dst_temps = .{ .{ .rc = .sse }, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, .v_pd, .cmp, .dst0y, .dst0y, .dst0y, .vp(.true) },
+                        .{ ._, .v_pd, .xor, .dst0y, .dst0y, .src0y, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .signed_or_exact_int = .yword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_ymm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .sse }, .unused },
                     .each = .{ .once = &.{
@@ -64350,7 +64475,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int = .yword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_ymm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -64369,6 +64494,37 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .each = .{ .once = &.{
                         .{ ._, ._, .lea, .tmp0p, .mem(.tmp1), ._, ._ },
                         .{ ._, .v_pd, .xor, .dst0y, .src0y, .lea(.tmp0y), ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .avx2, null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .yword, .is = .xword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .isize, .kind = .{ .rc = .general_purpose } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .clobbers = .{ .eflags = true },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0p, .sia(16, .src0, .sub_size), ._, ._ },
+                        .{ ._, .vp_q, .cmpeq, .tmp1y, .tmp1y, .tmp1y, ._ },
+                        .{ .@"0:", .vp_, .xor, .tmp2y, .tmp1y, .memiad(.src0y, .tmp0, .add_size, -16), ._ },
+                        .{ ._, .v_dqu, .mov, .memiad(.dst0y, .tmp0, .add_size, -16), .tmp2y, ._, ._ },
+                        .{ ._, ._, .add, .tmp0p, .si(32), ._, ._ },
+                        .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
+                        .{ .@"0:", .vp_, .xor, .tmp2x, .tmp1x, .memad(.src0x, .add_size, -16), ._ },
+                        .{ ._, .v_dqa, .mov, .memad(.dst0x, .add_size, -16), .tmp2x, ._, ._ },
                     } },
                 }, .{
                     .required_features = .{ .avx2, null, null, null },
@@ -64403,6 +64559,35 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .avx2, null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .yword, .is = .yword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .isize, .kind = .{ .rc = .general_purpose } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .clobbers = .{ .eflags = true },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0p, .sa(.src0, .sub_size), ._, ._ },
+                        .{ ._, .vp_q, .cmpeq, .tmp1y, .tmp1y, .tmp1y, ._ },
+                        .{ .@"0:", .vp_, .xor, .tmp2y, .tmp1y, .memia(.src0y, .tmp0, .add_size), ._ },
+                        .{ ._, .v_dqu, .mov, .memia(.dst0y, .tmp0, .add_size), .tmp2y, ._, ._ },
+                        .{ ._, ._, .add, .tmp0p, .si(32), ._, ._ },
+                        .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .avx2, null, null, null },
                     .src_constraints = .{ .{ .signed_or_exact_remainder_int = .{ .of = .yword, .is = .yword } }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .to_mem, .none, .none } },
@@ -64429,6 +64614,37 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .{ ._, .v_dqu, .mov, .memia(.dst0y, .tmp0, .add_size), .tmp2y, ._, ._ },
                         .{ ._, ._, .add, .tmp0p, .si(32), ._, ._ },
                         .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .avx, null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .yword, .is = .xword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .isize, .kind = .{ .rc = .general_purpose } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .clobbers = .{ .eflags = true },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0p, .sia(16, .src0, .sub_size), ._, ._ },
+                        .{ ._, .v_pd, .cmp, .tmp1y, .tmp1y, .tmp1y, .vp(.true) },
+                        .{ .@"0:", .v_pd, .xor, .tmp2y, .tmp1y, .memiad(.src0y, .tmp0, .add_size, -16), ._ },
+                        .{ ._, .v_pd, .movu, .memiad(.dst0y, .tmp0, .add_size, -16), .tmp2y, ._, ._ },
+                        .{ ._, ._, .add, .tmp0p, .si(32), ._, ._ },
+                        .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
+                        .{ .@"0:", .v_pd, .xor, .tmp2x, .tmp1x, .memad(.src0x, .add_size, -16), ._ },
+                        .{ ._, .v_pd, .mova, .memad(.dst0x, .add_size, -16), .tmp2x, ._, ._ },
                     } },
                 }, .{
                     .required_features = .{ .avx, null, null, null },
@@ -64463,6 +64679,35 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .avx, null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .yword, .is = .yword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .isize, .kind = .{ .rc = .general_purpose } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .clobbers = .{ .eflags = true },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0p, .sa(.src0, .sub_size), ._, ._ },
+                        .{ ._, .v_pd, .cmp, .tmp1y, .tmp1y, .tmp1y, .vp(.true) },
+                        .{ .@"0:", .v_pd, .xor, .tmp2y, .tmp1y, .memia(.src0y, .tmp0, .add_size), ._ },
+                        .{ ._, .v_pd, .movu, .memia(.dst0y, .tmp0, .add_size), .tmp2y, ._, ._ },
+                        .{ ._, ._, .add, .tmp0p, .si(32), ._, ._ },
+                        .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .signed_or_exact_remainder_int = .{ .of = .yword, .is = .yword } }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .to_mem, .none, .none } },
@@ -64492,6 +64737,35 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .avx, null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .xword, .is = .xword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .isize, .kind = .{ .rc = .general_purpose } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .clobbers = .{ .eflags = true },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0p, .sa(.src0, .sub_size), ._, ._ },
+                        .{ ._, .vp_q, .cmpeq, .tmp1x, .tmp1x, .tmp1x, ._ },
+                        .{ .@"0:", .v_, .xor, .tmp2x, .tmp1x, .memia(.src0x, .tmp0, .add_size), ._ },
+                        .{ ._, .v_dqa, .mov, .memia(.dst0x, .tmp0, .add_size), .tmp2x, ._, ._ },
+                        .{ ._, ._, .add, .tmp0p, .si(16), ._, ._ },
+                        .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .signed_or_exact_remainder_int = .{ .of = .xword, .is = .xword } }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .to_mem, .none, .none } },
@@ -64516,6 +64790,36 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .{ ._, .vp_q, .cmpeq, .tmp1x, .tmp1x, .tmp1x, ._ },
                         .{ .@"0:", .v_, .xor, .tmp2x, .tmp1x, .memia(.src0x, .tmp0, .add_size), ._ },
                         .{ ._, .v_dqa, .mov, .memia(.dst0x, .tmp0, .add_size), .tmp2x, ._, ._ },
+                        .{ ._, ._, .add, .tmp0p, .si(16), ._, ._ },
+                        .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .sse2, null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .xword, .is = .xword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .isize, .kind = .{ .rc = .general_purpose } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .{ .kind = .{ .rc = .sse } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .clobbers = .{ .eflags = true },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0p, .sa(.src0, .sub_size), ._, ._ },
+                        .{ ._, .p_d, .cmpeq, .tmp1x, .tmp1x, ._, ._ },
+                        .{ .@"0:", ._dqa, .mov, .tmp2x, .memia(.src0x, .tmp0, .add_size), ._, ._ },
+                        .{ ._, .p_, .xor, .tmp2x, .tmp1x, ._, ._ },
+                        .{ ._, ._dqa, .mov, .memia(.dst0x, .tmp0, .add_size), .tmp2x, ._, ._ },
                         .{ ._, ._, .add, .tmp0p, .si(16), ._, ._ },
                         .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
                     } },
@@ -64551,6 +64855,34 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .@"64bit", null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .xword, .is = .xword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .mut_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .isize, .kind = .{ .rc = .general_purpose } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .{ .ref = .src0 }, .unused },
+                    .clobbers = .{ .eflags = true },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0p, .sa(.src0, .sub_size), ._, ._ },
+                        .{ .@"0:", ._, .not, .memia(.dst0q, .tmp0, .add_size), ._, ._, ._ },
+                        .{ ._, ._, .not, .memiad(.dst0q, .tmp0, .add_size, 8), ._, ._, ._ },
+                        .{ ._, ._, .add, .tmp0p, .si(16), ._, ._ },
+                        .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .@"64bit", null, null, null },
                     .src_constraints = .{ .{ .signed_or_exact_remainder_int = .{ .of = .xword, .is = .xword } }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mut_mem, .none, .none } },
@@ -64575,6 +64907,35 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                         .{ .@"0:", ._, .not, .memia(.dst0q, .tmp0, .add_size), ._, ._, ._ },
                         .{ ._, ._, .not, .memiad(.dst0q, .tmp0, .add_size, 8), ._, ._, ._ },
                         .{ ._, ._, .add, .tmp0p, .si(16), ._, ._ },
+                        .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .@"64bit", null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .xword, .is = .xword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .isize, .kind = .{ .rc = .general_purpose } },
+                        .{ .type = .u64, .kind = .{ .rc = .general_purpose } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .clobbers = .{ .eflags = true },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0p, .sa(.src0, .sub_size), ._, ._ },
+                        .{ .@"0:", ._, .mov, .tmp1q, .memia(.src0q, .tmp0, .add_size), ._, ._ },
+                        .{ ._, ._, .not, .tmp1q, ._, ._, ._ },
+                        .{ ._, ._, .mov, .memia(.dst0q, .tmp0, .add_size), .tmp1q, ._, ._ },
+                        .{ ._, ._, .add, .tmp0p, .si(8), ._, ._ },
                         .{ ._, ._nc, .j, .@"0b", ._, ._, ._ },
                     } },
                 }, .{
@@ -65042,7 +65403,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .src_constraints = .{ .{ .signed_int_or_full_vec = .qword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_mm, .none, .none } },
+                        .{ .src = .{ .to_mmx, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .mmx }, .unused },
                     .each = .{ .once = &.{
@@ -65053,7 +65414,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .mmx, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int_vec = .qword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_mm, .none, .none } },
+                        .{ .src = .{ .to_mut_mmx, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -65078,7 +65439,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .src_constraints = .{ .{ .signed_int_or_full_vec = .xword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_xmm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .sse }, .unused },
                     .each = .{ .once = &.{
@@ -65089,7 +65450,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int_vec = .xword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_xmm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -65114,7 +65475,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .src_constraints = .{ .{ .signed_int_or_full_vec = .xword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_xmm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .sse }, .unused },
                     .each = .{ .once = &.{
@@ -65125,7 +65486,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .sse2, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int_vec = .xword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_xmm, .none, .none } },
+                        .{ .src = .{ .to_mut_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -65149,7 +65510,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .sse, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int_vec = .xword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_xmm, .none, .none } },
+                        .{ .src = .{ .to_mut_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -65174,7 +65535,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .src_constraints = .{ .{ .signed_int_or_full_vec = .yword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_ymm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .sse }, .unused },
                     .each = .{ .once = &.{
@@ -65185,7 +65546,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .avx2, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int_vec = .yword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_ymm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -65210,7 +65571,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .src_constraints = .{ .{ .signed_int_or_full_vec = .yword }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_ymm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .dst_temps = .{ .{ .rc = .sse }, .unused },
                     .each = .{ .once = &.{
@@ -65221,7 +65582,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .unsigned_int_vec = .yword }, .any, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_ymm, .none, .none } },
+                        .{ .src = .{ .to_sse, .none, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .usize, .kind = .{ .rc = .general_purpose } },
@@ -65243,6 +65604,118 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     } },
                 }, .{
                     .required_features = .{ .@"64bit", null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .xword, .is = .qword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .{ .type = .u64, .kind = .{ .rc = .general_purpose } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_size), ._, ._ },
+                        .{ .@"0:", ._, .mov, .tmp1q, .memi(.src0q, .tmp0), ._, ._ },
+                        .{ ._, ._, .not, .tmp1q, ._, ._, ._ },
+                        .{ ._, ._, .mov, .memi(.dst0q, .tmp0), .tmp1q, ._, ._ },
+                        .{ ._, ._, .sub, .tmp0d, .si(8), ._, ._ },
+                        .{ ._, ._ae, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .@"64bit", null, null, null },
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .xword, .is = .xword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .{ .type = .u64, .kind = .{ .rc = .general_purpose } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ .@"0:", ._, .mov, .tmp1q, .memi(.src0q, .tmp0), ._, ._ },
+                        .{ ._, ._, .not, .tmp1q, ._, ._, ._ },
+                        .{ ._, ._, .mov, .memi(.dst0q, .tmp0), .tmp1q, ._, ._ },
+                        .{ ._, ._, .sub, .tmp0d, .si(8), ._, ._ },
+                        .{ ._, ._ae, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .@"64bit", null, null, null },
+                    .src_constraints = .{ .any_signed_int_or_full_vec, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .{ .type = .u64, .kind = .{ .rc = .general_purpose } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
+                        .{ .@"0:", ._, .mov, .tmp1q, .memi(.src0q, .tmp0), ._, ._ },
+                        .{ ._, ._, .not, .tmp1q, ._, ._, ._ },
+                        .{ ._, ._, .mov, .memi(.dst0q, .tmp0), .tmp1q, ._, ._ },
+                        .{ ._, ._, .sub, .tmp0d, .si(8), ._, ._ },
+                        .{ ._, ._ae, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .@"64bit", null, null, null },
+                    .src_constraints = .{ .{ .signed_or_exact_remainder_int = .{ .of = .qword, .is = .qword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .{ .type = .u64, .kind = .{ .rc = .general_purpose } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ .@"0:", ._, .mov, .tmp1q, .memi(.src0q, .tmp0), ._, ._ },
+                        .{ ._, ._, .not, .tmp1q, ._, ._, ._ },
+                        .{ ._, ._, .mov, .memi(.dst0q, .tmp0), .tmp1q, ._, ._ },
+                        .{ ._, ._, .sub, .tmp0d, .si(8), ._, ._ },
+                        .{ ._, ._ae, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .required_features = .{ .@"64bit", null, null, null },
                     .patterns = &.{
                         .{ .src = .{ .to_mem, .none, .none } },
                     },
@@ -65261,14 +65734,94 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     },
                     .dst_temps = .{ .mem, .unused },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .xor, .tmp0d, .tmp0d, ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ ._, ._, .lea, .tmp1p, .mem(.tmp3), ._, ._ },
                         .{ .@"0:", ._, .mov, .tmp2q, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, ._, .xor, .tmp2q, .leai(.tmp1q, .tmp0), ._, ._ },
                         .{ ._, ._, .mov, .memi(.dst0q, .tmp0), .tmp2q, ._, ._ },
-                        .{ ._, ._, .lea, .tmp0d, .lead(.tmp0, 8), ._, ._ },
-                        .{ ._, ._, .cmp, .tmp0d, .sa(.src0, .add_unaligned_size), ._, ._ },
-                        .{ ._, ._b, .j, .@"0b", ._, ._, ._ },
+                        .{ ._, ._, .sub, .tmp0d, .si(8), ._, ._ },
+                        .{ ._, ._ae, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .src_constraints = .{ .{ .remainder_bool_vec = .{ .of = .dword, .is = .dword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ .@"0:", ._, .mov, .tmp1d, .memi(.src0d, .tmp0), ._, ._ },
+                        .{ ._, ._, .not, .tmp1d, ._, ._, ._ },
+                        .{ ._, ._, .mov, .memi(.dst0d, .tmp0), .tmp1d, ._, ._ },
+                        .{ ._, ._, .sub, .tmp0d, .si(4), ._, ._ },
+                        .{ ._, ._ae, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .src_constraints = .{ .any_signed_int_or_full_vec, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
+                        .{ .@"0:", ._, .mov, .tmp1d, .memi(.src0d, .tmp0), ._, ._ },
+                        .{ ._, ._, .not, .tmp1d, ._, ._, ._ },
+                        .{ ._, ._, .mov, .memi(.dst0d, .tmp0), .tmp1d, ._, ._ },
+                        .{ ._, ._, .sub, .tmp0d, .si(4), ._, ._ },
+                        .{ ._, ._ae, .j, .@"0b", ._, ._, ._ },
+                    } },
+                }, .{
+                    .src_constraints = .{ .{ .signed_or_exact_remainder_int = .{ .of = .dword, .is = .dword } }, .any, .any },
+                    .patterns = &.{
+                        .{ .src = .{ .to_mem, .none, .none } },
+                    },
+                    .extra_temps = .{
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                        .unused,
+                    },
+                    .dst_temps = .{ .mem, .unused },
+                    .each = .{ .once = &.{
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ .@"0:", ._, .mov, .tmp1d, .memi(.src0d, .tmp0), ._, ._ },
+                        .{ ._, ._, .not, .tmp1d, ._, ._, ._ },
+                        .{ ._, ._, .mov, .memi(.dst0d, .tmp0), .tmp1d, ._, ._ },
+                        .{ ._, ._, .sub, .tmp0d, .si(4), ._, ._ },
+                        .{ ._, ._ae, .j, .@"0b", ._, ._, ._ },
                     } },
                 }, .{
                     .patterns = &.{
@@ -65289,14 +65842,13 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     },
                     .dst_temps = .{ .mem, .unused },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .xor, .tmp0d, .tmp0d, ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ ._, ._, .lea, .tmp1p, .mem(.tmp3), ._, ._ },
                         .{ .@"0:", ._, .mov, .tmp2d, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, ._, .xor, .tmp2d, .leai(.tmp1d, .tmp0), ._, ._ },
                         .{ ._, ._, .mov, .memi(.dst0d, .tmp0), .tmp2d, ._, ._ },
-                        .{ ._, ._, .lea, .tmp0d, .lead(.tmp0, 4), ._, ._ },
-                        .{ ._, ._, .cmp, .tmp0d, .sa(.src0, .add_unaligned_size), ._, ._ },
-                        .{ ._, ._b, .j, .@"0b", ._, ._, ._ },
+                        .{ ._, ._, .sub, .tmp0d, .si(8), ._, ._ },
+                        .{ ._, ._ae, .j, .@"0b", ._, ._, ._ },
                     } },
                 } }) catch |err| switch (err) {
                     error.SelectFailed => return cg.fail("failed to select {s} {f} {f}", .{
@@ -75371,7 +75923,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .src_constraints = .{ .{ .scalar_int = .{ .of = .qword, .is = .byte } }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_mm, .none, .none } },
+                        .{ .src = .{ .to_mmx, .none, .none } },
                     },
                     .dst_temps = .{ .{ .mut_rc = .{ .ref = .src0, .rc = .mmx } }, .unused },
                     .each = .{ .once = &.{
@@ -75382,7 +75934,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .src_constraints = .{ .{ .scalar_int = .{ .of = .qword, .is = .word } }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_mm, .none, .none } },
+                        .{ .src = .{ .to_mmx, .none, .none } },
                     },
                     .dst_temps = .{ .{ .mut_rc = .{ .ref = .src0, .rc = .mmx } }, .unused },
                     .each = .{ .once = &.{
@@ -75393,7 +75945,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .src_constraints = .{ .{ .scalar_int = .{ .of = .qword, .is = .dword } }, .any, .any },
                     .patterns = &.{
                         .{ .src = .{ .mem, .none, .none } },
-                        .{ .src = .{ .to_mm, .none, .none } },
+                        .{ .src = .{ .to_mmx, .none, .none } },
                     },
                     .dst_temps = .{ .{ .mut_rc = .{ .ref = .src0, .rc = .mmx } }, .unused },
                     .each = .{ .once = &.{
@@ -190208,9 +190760,9 @@ const Temp = struct {
                     .required_features = .{ .sse, .mmx, null, null },
                     .src_constraints = .{ .{ .int = .qword }, .{ .int = .qword }, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_mm, .mem, .none } },
-                        .{ .src = .{ .mem, .to_mut_mm, .none }, .commute = .{ 0, 1 } },
-                        .{ .src = .{ .to_mut_mm, .to_mm, .none } },
+                        .{ .src = .{ .to_mut_mmx, .mem, .none } },
+                        .{ .src = .{ .mem, .to_mut_mmx, .none }, .commute = .{ 0, 1 } },
+                        .{ .src = .{ .to_mut_mmx, .to_mmx, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
@@ -190238,9 +190790,9 @@ const Temp = struct {
                     .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .int = .xword }, .{ .int = .xword }, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_xmm, .mem, .none } },
-                        .{ .src = .{ .mem, .to_xmm, .none }, .commute = .{ 0, 1 } },
-                        .{ .src = .{ .to_xmm, .to_xmm, .none } },
+                        .{ .src = .{ .to_sse, .mem, .none } },
+                        .{ .src = .{ .mem, .to_sse, .none }, .commute = .{ 0, 1 } },
+                        .{ .src = .{ .to_sse, .to_sse, .none } },
                     },
                     .extra_temps = .{
                         .{ .kind = .{ .rc = .sse } },
@@ -190265,9 +190817,9 @@ const Temp = struct {
                     .required_features = .{ .sse4_1, null, null, null },
                     .src_constraints = .{ .{ .int = .xword }, .{ .int = .xword }, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_xmm, .mem, .none } },
-                        .{ .src = .{ .mem, .to_mut_xmm, .none }, .commute = .{ 0, 1 } },
-                        .{ .src = .{ .to_mut_xmm, .to_xmm, .none } },
+                        .{ .src = .{ .to_mut_sse, .mem, .none } },
+                        .{ .src = .{ .mem, .to_mut_sse, .none }, .commute = .{ 0, 1 } },
+                        .{ .src = .{ .to_mut_sse, .to_sse, .none } },
                     },
                     .dst_temps = .{ .{ .cc = .z }, .unused },
                     .clobbers = .{ .eflags = true },
@@ -190279,9 +190831,9 @@ const Temp = struct {
                     .required_features = .{ .sse2, .fast_imm16, null, null },
                     .src_constraints = .{ .{ .int = .xword }, .{ .int = .xword }, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_xmm, .mem, .none } },
-                        .{ .src = .{ .mem, .to_mut_xmm, .none }, .commute = .{ 0, 1 } },
-                        .{ .src = .{ .to_mut_xmm, .to_xmm, .none } },
+                        .{ .src = .{ .to_mut_sse, .mem, .none } },
+                        .{ .src = .{ .mem, .to_mut_sse, .none }, .commute = .{ 0, 1 } },
+                        .{ .src = .{ .to_mut_sse, .to_sse, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
@@ -190309,9 +190861,9 @@ const Temp = struct {
                     .required_features = .{ .sse2, null, null, null },
                     .src_constraints = .{ .{ .int = .xword }, .{ .int = .xword }, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_mut_xmm, .mem, .none } },
-                        .{ .src = .{ .mem, .to_mut_xmm, .none }, .commute = .{ 0, 1 } },
-                        .{ .src = .{ .to_mut_xmm, .to_xmm, .none } },
+                        .{ .src = .{ .to_mut_sse, .mem, .none } },
+                        .{ .src = .{ .mem, .to_mut_sse, .none }, .commute = .{ 0, 1 } },
+                        .{ .src = .{ .to_mut_sse, .to_sse, .none } },
                     },
                     .extra_temps = .{
                         .{ .type = .u32, .kind = .{ .rc = .general_purpose } },
@@ -190339,9 +190891,9 @@ const Temp = struct {
                     .required_features = .{ .avx2, null, null, null },
                     .src_constraints = .{ .{ .int = .yword }, .{ .int = .yword }, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_ymm, .mem, .none } },
-                        .{ .src = .{ .mem, .to_ymm, .none }, .commute = .{ 0, 1 } },
-                        .{ .src = .{ .to_ymm, .to_ymm, .none } },
+                        .{ .src = .{ .to_sse, .mem, .none } },
+                        .{ .src = .{ .mem, .to_sse, .none }, .commute = .{ 0, 1 } },
+                        .{ .src = .{ .to_sse, .to_sse, .none } },
                     },
                     .extra_temps = .{
                         .{ .kind = .{ .rc = .sse } },
@@ -190366,9 +190918,9 @@ const Temp = struct {
                     .required_features = .{ .avx, null, null, null },
                     .src_constraints = .{ .{ .int = .yword }, .{ .int = .yword }, .any },
                     .patterns = &.{
-                        .{ .src = .{ .to_ymm, .mem, .none } },
-                        .{ .src = .{ .mem, .to_ymm, .none }, .commute = .{ 0, 1 } },
-                        .{ .src = .{ .to_ymm, .to_ymm, .none } },
+                        .{ .src = .{ .to_sse, .mem, .none } },
+                        .{ .src = .{ .mem, .to_sse, .none }, .commute = .{ 0, 1 } },
+                        .{ .src = .{ .to_sse, .to_sse, .none } },
                     },
                     .extra_temps = .{
                         .{ .kind = .{ .rc = .sse } },
@@ -192348,6 +192900,7 @@ const Select = struct {
         any_scalar_int,
         any_scalar_signed_int,
         any_scalar_unsigned_int,
+        any_signed_int_or_full_vec,
         any_float,
         po2_any,
         bool,
@@ -192444,6 +192997,11 @@ const Select = struct {
                 .any_scalar_int => cg.intInfo(ty.scalarType(zcu)) != null,
                 .any_scalar_signed_int => if (cg.intInfo(ty.scalarType(zcu))) |int_info| int_info.signedness == .signed else false,
                 .any_scalar_unsigned_int => if (cg.intInfo(ty.scalarType(zcu))) |int_info| int_info.signedness == .unsigned else false,
+                .any_signed_int_or_full_vec => ty.isVector(zcu) and
+                    if (cg.intInfo(ty.childType(zcu))) |int_info| switch (int_info.signedness) {
+                        .signed => true,
+                        .unsigned => (int_info.bits >= 8 and std.math.isPowerOfTwo(int_info.bits)) or int_info.bits % 128 == 0,
+                    } else false,
                 .any_float => ty.isRuntimeFloat(),
                 .po2_any => std.math.isPowerOfTwo(ty.abiSize(zcu)),
                 .bool => ty.toIntern() == .bool_type,
@@ -192484,7 +193042,7 @@ const Select = struct {
                 .signed_int_or_full_vec => |size| ty.isVector(zcu) and @divExact(size.bitSize(cg.target), 8) >= ty.abiSize(zcu) and
                     if (cg.intInfo(ty.childType(zcu))) |int_info| switch (int_info.signedness) {
                         .signed => true,
-                        .unsigned => int_info.bits >= 8 and std.math.isPowerOfTwo(int_info.bits),
+                        .unsigned => (int_info.bits >= 8 and std.math.isPowerOfTwo(int_info.bits)) or int_info.bits % 128 == 0,
                     } else false,
                 .unsigned_int_vec => |size| ty.isVector(zcu) and @divExact(size.bitSize(cg.target), 8) >= ty.abiSize(zcu) and
                     if (cg.intInfo(ty.childType(zcu))) |int_info| int_info.signedness == .unsigned else false,
@@ -192733,22 +193291,10 @@ const Select = struct {
             to_mmx,
             mut_mmx,
             to_mut_mmx,
-            mm,
-            to_mm,
-            mut_mm,
-            to_mut_mm,
             sse,
             to_sse,
             mut_sse,
             to_mut_sse,
-            xmm,
-            to_xmm,
-            mut_xmm,
-            to_mut_xmm,
-            ymm,
-            to_ymm,
-            mut_ymm,
-            to_mut_ymm,
             reg_mask: RegMaskSpec,
             all_reg_mask: RegMaskSpec,
 
@@ -192838,17 +193384,6 @@ const Select = struct {
                         else => false,
                     },
                     .to_mmx, .to_mut_mmx => true,
-                    .mm => temp.typeOf(cg).abiSize(cg.pt.zcu) == 8 and switch (temp.tracking(cg).short) {
-                        .register => |reg| reg.isClass(.mmx),
-                        .register_offset => |reg_off| reg_off.reg.isClass(.mmx) and reg_off.off == 0,
-                        else => false,
-                    },
-                    .mut_mm => temp.isMut(cg) and temp.typeOf(cg).abiSize(cg.pt.zcu) == 8 and switch (temp.tracking(cg).short) {
-                        .register => |reg| reg.isClass(.mmx),
-                        .register_offset => |reg_off| reg_off.reg.isClass(.mmx) and reg_off.off == 0,
-                        else => false,
-                    },
-                    .to_mm, .to_mut_mm => temp.typeOf(cg).abiSize(cg.pt.zcu) == 8,
                     .sse => switch (temp.tracking(cg).short) {
                         .register => |reg| reg.isClass(.sse),
                         .register_offset => |reg_off| reg_off.reg.isClass(.sse) and reg_off.off == 0,
@@ -192860,28 +193395,6 @@ const Select = struct {
                         else => false,
                     },
                     .to_sse, .to_mut_sse => true,
-                    .xmm => temp.typeOf(cg).abiSize(cg.pt.zcu) == 16 and switch (temp.tracking(cg).short) {
-                        .register => |reg| reg.isClass(.sse),
-                        .register_offset => |reg_off| reg_off.reg.isClass(.sse) and reg_off.off == 0,
-                        else => false,
-                    },
-                    .mut_xmm => temp.isMut(cg) and temp.typeOf(cg).abiSize(cg.pt.zcu) == 16 and switch (temp.tracking(cg).short) {
-                        .register => |reg| reg.isClass(.sse),
-                        .register_offset => |reg_off| reg_off.reg.isClass(.sse) and reg_off.off == 0,
-                        else => false,
-                    },
-                    .to_xmm, .to_mut_xmm => temp.typeOf(cg).abiSize(cg.pt.zcu) == 16,
-                    .ymm => temp.typeOf(cg).abiSize(cg.pt.zcu) == 32 and switch (temp.tracking(cg).short) {
-                        .register => |reg| reg.isClass(.sse),
-                        .register_offset => |reg_off| reg_off.reg.isClass(.sse) and reg_off.off == 0,
-                        else => false,
-                    },
-                    .mut_ymm => temp.isMut(cg) and temp.typeOf(cg).abiSize(cg.pt.zcu) == 32 and switch (temp.tracking(cg).short) {
-                        .register => |reg| reg.isClass(.sse),
-                        .register_offset => |reg_off| reg_off.reg.isClass(.sse) and reg_off.off == 0,
-                        else => false,
-                    },
-                    .to_ymm, .to_mut_ymm => temp.typeOf(cg).abiSize(cg.pt.zcu) == 32,
                     .reg_mask => |mask_spec| switch (temp.tracking(cg).short) {
                         .register_mask => |reg_mask| mask_spec.size.bitSize(cg.target) >=
                             reg_mask.info.scalar.bitSize(cg.target) * temp.typeOf(cg).vectorLen(cg.pt.zcu) and
@@ -192915,10 +193428,10 @@ const Select = struct {
                     .to_mut_gphi => try temp.toRegClass(true, .gphi, cg),
                     .x87, .to_x87 => try temp.toRegClass(false, .x87, cg),
                     .mut_x87, .to_mut_x87 => try temp.toRegClass(true, .x87, cg),
-                    .mmx, .to_mmx, .mm, .to_mm => try temp.toRegClass(false, .mmx, cg),
-                    .mut_mmx, .to_mut_mmx, .mut_mm, .to_mut_mm => try temp.toRegClass(true, .mmx, cg),
-                    .sse, .to_sse, .xmm, .to_xmm, .ymm, .to_ymm => try temp.toRegClass(false, .sse, cg),
-                    .mut_sse, .to_mut_sse, .mut_xmm, .to_mut_xmm, .mut_ymm, .to_mut_ymm => try temp.toRegClass(true, .sse, cg),
+                    .mmx, .to_mmx => try temp.toRegClass(false, .mmx, cg),
+                    .mut_mmx, .to_mut_mmx => try temp.toRegClass(true, .mmx, cg),
+                    .sse, .to_sse => try temp.toRegClass(false, .sse, cg),
+                    .mut_sse, .to_mut_sse => try temp.toRegClass(true, .sse, cg),
                 };
             }
         };
