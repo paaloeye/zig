@@ -112419,7 +112419,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxb, .tmp1y, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1y, .tmp1y, ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memsi(.dst0x, .@"2", .tmp0), .tmp1y, .rm(.{}), ._ },
@@ -112449,7 +112449,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxb, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memsi(.dst0q, .@"2", .tmp0), .tmp1x, .rm(.{}), ._ },
@@ -112479,7 +112479,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxb, .tmp1y, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1y, .tmp1y, ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memsi(.dst0x, .@"2", .tmp0), .tmp1y, .rm(.{}), ._ },
@@ -112509,7 +112509,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxb, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memsi(.dst0q, .@"2", .tmp0), .tmp1x, .rm(.{}), ._ },
@@ -113103,7 +113103,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_unaligned_size_up_16), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxw, .tmp1y, .memi(.src0x, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1y, .tmp1y, ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memi(.dst0x, .tmp0), .tmp1y, .rm(.{}), ._ },
@@ -113133,7 +113133,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxw, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memi(.dst0q, .tmp0), .tmp1x, .rm(.{}), ._ },
@@ -113163,7 +113163,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_unaligned_size_up_16), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxw, .tmp1y, .memi(.src0x, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1y, .tmp1y, ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memi(.dst0x, .tmp0), .tmp1y, .rm(.{}), ._ },
@@ -113193,7 +113193,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxw, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memi(.dst0q, .tmp0), .tmp1x, .rm(.{}), ._ },
@@ -113503,7 +113503,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .dst0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .dst0, .add_unaligned_size_up_16), ._, ._ },
                         .{ .@"0:", .v_ps, .cvtdq2, .tmp1y, .memsi(.src0y, .@"2", .tmp0), ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memi(.dst0x, .tmp0), .tmp1y, .rm(.{}), ._ },
                         .{ ._, ._, .sub, .tmp0d, .si(16), ._, ._ },
@@ -113532,7 +113532,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .dst0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .dst0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .v_ps, .cvtdq2, .tmp1x, .memsi(.src0x, .@"2", .tmp0), ._, ._ },
                         .{ ._, .v_, .cvtps2ph, .memi(.dst0q, .tmp0), .tmp1x, .rm(.{}), ._ },
                         .{ ._, ._, .sub, .tmp0d, .si(8), ._, ._ },
@@ -115546,7 +115546,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxb, .tmp1y, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1y, .tmp1y, ._, ._ },
                         .{ ._, .v_ps, .mova, .memsi(.dst0y, .@"4", .tmp0), .tmp1y, ._, ._ },
@@ -115576,7 +115576,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxb, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .v_ps, .mova, .memsi(.dst0x, .@"4", .tmp0), .tmp1x, ._, ._ },
@@ -115606,7 +115606,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .p_d, .movsxb, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, ._ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, ._ps, .mova, .memsi(.dst0x, .@"4", .tmp0), .tmp1x, ._, ._ },
@@ -115636,7 +115636,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxb, .tmp1y, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1y, .tmp1y, ._, ._ },
                         .{ ._, .v_ps, .mova, .memsi(.dst0y, .@"4", .tmp0), .tmp1y, ._, ._ },
@@ -115666,7 +115666,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxb, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .v_ps, .mova, .memsi(.dst0x, .@"4", .tmp0), .tmp1x, ._, ._ },
@@ -115696,7 +115696,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .p_d, .movzxb, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, ._ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, ._ps, .mova, .memsi(.dst0x, .@"4", .tmp0), .tmp1x, ._, ._ },
@@ -116052,7 +116052,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_unaligned_size_up_16), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxw, .tmp1y, .memi(.src0x, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1y, .tmp1y, ._, ._ },
                         .{ ._, .v_ps, .mova, .memsi(.dst0y, .@"2", .tmp0), .tmp1y, ._, ._ },
@@ -116082,7 +116082,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxw, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .v_ps, .mova, .memsi(.dst0x, .@"2", .tmp0), .tmp1x, ._, ._ },
@@ -116112,7 +116112,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .p_d, .movsxw, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, ._ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, ._ps, .mova, .memsi(.dst0x, .@"2", .tmp0), .tmp1x, ._, ._ },
@@ -116142,7 +116142,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_unaligned_size_up_16), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxw, .tmp1y, .memi(.src0x, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1y, .tmp1y, ._, ._ },
                         .{ ._, .v_ps, .mova, .memsi(.dst0y, .@"2", .tmp0), .tmp1y, ._, ._ },
@@ -116172,7 +116172,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxw, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .v_ps, .mova, .memsi(.dst0x, .@"2", .tmp0), .tmp1x, ._, ._ },
@@ -116202,7 +116202,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .p_d, .movzxw, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, ._ps, .cvtdq2, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, ._ps, .mova, .memsi(.dst0x, .@"2", .tmp0), .tmp1x, ._, ._ },
@@ -116392,7 +116392,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-32, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-32, .src0, .add_unaligned_size_up_32), ._, ._ },
                         .{ .@"0:", .v_ps, .cvtdq2, .tmp1y, .memi(.src0y, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .mova, .memi(.dst0y, .tmp0), .tmp1y, ._, ._ },
                         .{ ._, ._, .sub, .tmp0d, .si(32), ._, ._ },
@@ -116421,7 +116421,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .dst0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .dst0, .add_unaligned_size_up_16), ._, ._ },
                         .{ .@"0:", .v_ps, .cvtdq2, .tmp1x, .memi(.src0x, .tmp0), ._, ._ },
                         .{ ._, .v_ps, .mova, .memi(.dst0x, .tmp0), .tmp1x, ._, ._ },
                         .{ ._, ._, .sub, .tmp0d, .si(16), ._, ._ },
@@ -116450,7 +116450,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .dst0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .dst0, .add_unaligned_size_up_16), ._, ._ },
                         .{ .@"0:", ._ps, .cvtdq2, .tmp1x, .memi(.src0x, .tmp0), ._, ._ },
                         .{ ._, ._ps, .mova, .memi(.dst0x, .tmp0), .tmp1x, ._, ._ },
                         .{ ._, ._, .sub, .tmp0d, .si(16), ._, ._ },
@@ -118066,7 +118066,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxb, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .v_pd, .cvtdq2, .tmp1y, .tmp1x, ._, ._ },
                         .{ ._, .v_pd, .mova, .memsi(.dst0y, .@"8", .tmp0), .tmp1y, ._, ._ },
@@ -118096,7 +118096,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-2, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-2, .src0, .add_unaligned_size_up_2), ._, ._ },
                         .{ .@"0:", .vp_, .xor, .tmp1x, .tmp1x, .tmp1x, ._ },
                         .{ ._, .vp_w, .insr, .tmp1x, .tmp1x, .memi(.src0w, .tmp0), .ui(0) },
                         .{ ._, .vp_d, .movsxb, .tmp1x, .tmp1d, ._, ._ },
@@ -118128,7 +118128,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-2, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-2, .src0, .add_unaligned_size_up_2), ._, ._ },
                         .{ .@"0:", .p_, .xor, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .p_w, .insr, .tmp1x, .memi(.src0w, .tmp0), .ui(0), ._ },
                         .{ ._, .p_d, .movsxb, .tmp1x, .tmp1d, ._, ._ },
@@ -118160,7 +118160,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxb, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .v_pd, .cvtdq2, .tmp1y, .tmp1x, ._, ._ },
                         .{ ._, .v_pd, .mova, .memsi(.dst0y, .@"8", .tmp0), .tmp1y, ._, ._ },
@@ -118190,7 +118190,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-2, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-2, .src0, .add_unaligned_size_up_2), ._, ._ },
                         .{ .@"0:", .vp_, .xor, .tmp1x, .tmp1x, .tmp1x, ._ },
                         .{ ._, .vp_w, .insr, .tmp1x, .tmp1x, .memi(.src0w, .tmp0), .ui(0) },
                         .{ ._, .vp_d, .movzxb, .tmp1x, .tmp1d, ._, ._ },
@@ -118222,7 +118222,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-2, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-2, .src0, .add_unaligned_size_up_2), ._, ._ },
                         .{ .@"0:", .p_, .xor, .tmp1x, .tmp1x, ._, ._ },
                         .{ ._, .p_w, .insr, .tmp1x, .memi(.src0w, .tmp0), .ui(0), ._ },
                         .{ ._, .p_d, .movzxb, .tmp1x, .tmp1d, ._, ._ },
@@ -118704,7 +118704,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movsxw, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_pd, .cvtdq2, .tmp1y, .tmp1x, ._, ._ },
                         .{ ._, .v_pd, .mova, .memsi(.dst0y, .@"4", .tmp0), .tmp1y, ._, ._ },
@@ -118734,7 +118734,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .v_d, .mov, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .vp_d, .movsxw, .tmp1x, .tmp1q, ._, ._ },
                         .{ ._, .v_pd, .cvtdq2, .tmp1x, .tmp1q, ._, ._ },
@@ -118765,7 +118765,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", ._d, .mov, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .p_d, .movsxw, .tmp1x, .tmp1q, ._, ._ },
                         .{ ._, ._pd, .cvtdq2, .tmp1x, .tmp1q, ._, ._ },
@@ -118796,7 +118796,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .vp_d, .movzxw, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_pd, .cvtdq2, .tmp1y, .tmp1x, ._, ._ },
                         .{ ._, .v_pd, .mova, .memsi(.dst0y, .@"4", .tmp0), .tmp1y, ._, ._ },
@@ -118826,7 +118826,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", .v_d, .mov, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .vp_d, .movzxw, .tmp1x, .tmp1q, ._, ._ },
                         .{ ._, .v_pd, .cvtdq2, .tmp1x, .tmp1q, ._, ._ },
@@ -118857,7 +118857,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-4, .src0, .add_unaligned_size_up_4), ._, ._ },
                         .{ .@"0:", ._d, .mov, .tmp1x, .memi(.src0d, .tmp0), ._, ._ },
                         .{ ._, .p_d, .movzxw, .tmp1x, .tmp1q, ._, ._ },
                         .{ ._, ._pd, .cvtdq2, .tmp1x, .tmp1q, ._, ._ },
@@ -119110,7 +119110,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_unaligned_size_up_16), ._, ._ },
                         .{ .@"0:", .v_pd, .cvtdq2, .tmp1y, .memi(.src0x, .tmp0), ._, ._ },
                         .{ ._, .v_pd, .mova, .memsi(.dst0y, .@"2", .tmp0), .tmp1y, ._, ._ },
                         .{ ._, ._, .sub, .tmp0d, .si(16), ._, ._ },
@@ -119139,7 +119139,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", .v_pd, .cvtdq2, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, .v_pd, .mova, .memsi(.dst0x, .@"2", .tmp0), .tmp1x, ._, ._ },
                         .{ ._, ._, .sub, .tmp0d, .si(8), ._, ._ },
@@ -119168,7 +119168,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-8, .src0, .add_unaligned_size_up_8), ._, ._ },
                         .{ .@"0:", ._pd, .cvtdq2, .tmp1x, .memi(.src0q, .tmp0), ._, ._ },
                         .{ ._, ._pd, .mova, .memsi(.dst0x, .@"2", .tmp0), .tmp1x, ._, ._ },
                         .{ ._, ._, .sub, .tmp0d, .si(8), ._, ._ },
@@ -193468,7 +193468,7 @@ const Select = struct {
                 ref: Ref,
                 scale: Memory.Scale = .@"1",
             } = .{ .ref = .none },
-            unused: u2 = 0,
+            unused: u1 = 0,
         },
         imm: i32 = 0,
 
@@ -193481,7 +193481,7 @@ const Select = struct {
             lea,
             mem,
         };
-        const Adjust = packed struct(u11) {
+        const Adjust = packed struct(u12) {
             sign: enum(u1) { neg, pos },
             lhs: enum(u6) {
                 none,
@@ -193518,7 +193518,7 @@ const Select = struct {
                 umax_shr_src1,
                 repeat,
             },
-            op: enum(u2) { mul, div, div_8_down, rem_8_mul },
+            op: enum(u3) { mul, div, div_8_down, rem_8_mul, up_2_mul, up_32_mul },
             rhs: Memory.Scale,
 
             const none: Adjust = .{ .sign = .pos, .lhs = .none, .op = .mul, .rhs = .@"1" };
@@ -193539,6 +193539,11 @@ const Select = struct {
             const add_delta_elem_size: Adjust = .{ .sign = .pos, .lhs = .delta_elem_size, .op = .mul, .rhs = .@"1" };
             const add_delta_elem_size_div_8: Adjust = .{ .sign = .pos, .lhs = .delta_elem_size, .op = .div, .rhs = .@"8" };
             const add_unaligned_size: Adjust = .{ .sign = .pos, .lhs = .unaligned_size, .op = .mul, .rhs = .@"1" };
+            const add_unaligned_size_up_2: Adjust = .{ .sign = .pos, .lhs = .unaligned_size, .op = .up_2_mul, .rhs = .@"1" };
+            const add_unaligned_size_up_4: Adjust = .{ .sign = .pos, .lhs = .unaligned_size, .op = .up_2_mul, .rhs = .@"2" };
+            const add_unaligned_size_up_8: Adjust = .{ .sign = .pos, .lhs = .unaligned_size, .op = .up_2_mul, .rhs = .@"4" };
+            const add_unaligned_size_up_16: Adjust = .{ .sign = .pos, .lhs = .unaligned_size, .op = .up_2_mul, .rhs = .@"8" };
+            const add_unaligned_size_up_32: Adjust = .{ .sign = .pos, .lhs = .unaligned_size, .op = .up_32_mul, .rhs = .@"1" };
             const sub_unaligned_size: Adjust = .{ .sign = .neg, .lhs = .unaligned_size, .op = .mul, .rhs = .@"1" };
             const add_unaligned_size_add_elem_size: Adjust = .{ .sign = .pos, .lhs = .unaligned_size_add_elem_size, .op = .mul, .rhs = .@"1" };
             const add_unaligned_size_sub_elem_size: Adjust = .{ .sign = .pos, .lhs = .unaligned_size_sub_elem_size, .op = .mul, .rhs = .@"1" };
@@ -194551,7 +194556,9 @@ const Select = struct {
                 },
                 .div => @shrExact(lhs, rhs),
                 .div_8_down => lhs >> 3 & @as(SignedImm, -1) << rhs,
-                .rem_8_mul => lhs & (@as(SignedImm, 1) << @intCast(@as(u3, 3) + rhs)) - 1,
+                .rem_8_mul => lhs & ((@as(SignedImm, 8) << rhs) - 1),
+                .up_2_mul => ((lhs - 1) & @as(SignedImm, -2) << rhs) + (@as(SignedImm, 2) << rhs),
+                .up_32_mul => ((lhs - 1) & @as(SignedImm, -32) << rhs) + (@as(SignedImm, 32) << rhs),
             };
             const disp: SignedImm = @bitCast(@as(UnsignedImm, @as(u32, @bitCast(op.imm))));
             return switch (op.flags.adjust.sign) {
