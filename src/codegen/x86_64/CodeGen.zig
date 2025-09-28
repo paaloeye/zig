@@ -169138,7 +169138,7 @@ fn genBody(cg: *CodeGen, body: []const Air.Inst.Index) InnerError!void {
                     .dst_temps = .{ .mem, .unused },
                     .clobbers = .{ .eflags = true, .caller_preserved = .ccc },
                     .each = .{ .once = &.{
-                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .sub_unaligned_size), ._, ._ },
+                        .{ ._, ._, .mov, .tmp0d, .sia(-16, .src0, .add_unaligned_size), ._, ._ },
                         .{ .@"0:", ._ps, .mova, .tmp1x, .memi(.src0x, .tmp0), ._, ._ },
                         .{ ._, ._ps, .mova, .tmp2x, .memi(.src1x, .tmp0), ._, ._ },
                         .{ ._, ._ps, .mova, .tmp3x, .memi(.src2x, .tmp0), ._, ._ },
