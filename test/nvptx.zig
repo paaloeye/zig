@@ -15,7 +15,7 @@ pub fn addCases(ctx: *Cases, b: *std.Build) !void {
             \\    return a + b;
             \\}
             \\
-            \\pub export fn add_and_substract(a: i32, out: *i32) callconv(.kernel) void {
+            \\pub export fn add_and_subtract(a: i32, out: *i32) callconv(.kernel) void {
             \\    const x = add(a, 7);
             \\    var y = add(2, 0);
             \\    y -= x;

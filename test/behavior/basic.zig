@@ -475,11 +475,11 @@ test "array 2D const double ptr" {
     if (builtin.zig_backend == .stage2_arm) return error.SkipZigTest;
     if (builtin.zig_backend == .stage2_spirv) return error.SkipZigTest;
 
-    const rect_2d_vertexes = [_][1]f32{
+    const rect_2d_vertices = [_][1]f32{
         [_]f32{1.0},
         [_]f32{2.0},
     };
-    try testArray2DConstDoublePtr(&rect_2d_vertexes[0][0]);
+    try testArray2DConstDoublePtr(&rect_2d_vertices[0][0]);
 }
 
 test "array 2D const double ptr with offset" {
@@ -487,11 +487,11 @@ test "array 2D const double ptr with offset" {
     if (builtin.zig_backend == .stage2_arm) return error.SkipZigTest;
     if (builtin.zig_backend == .stage2_spirv) return error.SkipZigTest;
 
-    const rect_2d_vertexes = [_][2]f32{
+    const rect_2d_vertices = [_][2]f32{
         [_]f32{ 3.0, 4.239 },
         [_]f32{ 1.0, 2.0 },
     };
-    try testArray2DConstDoublePtr(&rect_2d_vertexes[1][0]);
+    try testArray2DConstDoublePtr(&rect_2d_vertices[1][0]);
 }
 
 test "array 3D const double ptr with offset" {
@@ -499,7 +499,7 @@ test "array 3D const double ptr with offset" {
     if (builtin.zig_backend == .stage2_arm) return error.SkipZigTest;
     if (builtin.zig_backend == .stage2_spirv) return error.SkipZigTest;
 
-    const rect_3d_vertexes = [_][2][2]f32{
+    const rect_3d_vertices = [_][2][2]f32{
         [_][2]f32{
             [_]f32{ 3.0, 4.239 },
             [_]f32{ 3.5, 7.2 },
@@ -509,7 +509,7 @@ test "array 3D const double ptr with offset" {
             [_]f32{ 1.0, 2.0 },
         },
     };
-    try testArray2DConstDoublePtr(&rect_3d_vertexes[1][1][0]);
+    try testArray2DConstDoublePtr(&rect_3d_vertices[1][1][0]);
 }
 
 fn testArray2DConstDoublePtr(ptr: *const f32) !void {

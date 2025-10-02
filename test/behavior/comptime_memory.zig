@@ -41,7 +41,7 @@ test "type pun signed and unsigned as offset many pointer" {
     }
 }
 
-test "type pun signed and unsigned as array pointer with pointer arithemtic" {
+test "type pun signed and unsigned as array pointer with pointer arithmetic" {
     comptime {
         var x: [11]u32 = undefined;
         const y = @as([*]i32, @ptrCast(&x[10])) - 10;

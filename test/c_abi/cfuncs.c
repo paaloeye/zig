@@ -5659,12 +5659,12 @@ void __attribute__((stdcall)) stdcall_big_union(union BigUnion x) {
 }
 
 #ifdef __x86_64__
-struct ByRef __attribute__((ms_abi)) c_explict_win64(struct ByRef in) {
+struct ByRef __attribute__((ms_abi)) c_explicit_win64(struct ByRef in) {
     in.val = 42;
     return in;
 }
 
-struct ByRef __attribute__((sysv_abi)) c_explict_sys_v(struct ByRef in) {
+struct ByRef __attribute__((sysv_abi)) c_explicit_sys_v(struct ByRef in) {
     in.val = 42;
     return in;
 }
