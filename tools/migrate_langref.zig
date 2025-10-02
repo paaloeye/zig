@@ -358,7 +358,7 @@ fn walk(arena: Allocator, tokenizer: *Tokenizer, out_dir: std.fs.Dir, w: anytype
                             link_libc = true;
                         } else if (mem.eql(u8, end_tag_name, "link_mode_dynamic")) {
                             link_mode = .dynamic;
-                        } else if (mem.eql(u8, end_tag_name, "additonal_option")) {
+                        } else if (mem.eql(u8, end_tag_name, "additional_option")) {
                             _ = try eatToken(tokenizer, .separator);
                             const option = try eatToken(tokenizer, .tag_content);
                             try additional_options.append(tokenizer.buffer[option.start..option.end]);
