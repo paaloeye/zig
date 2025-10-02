@@ -1,0 +1,129 @@
+# Ref: https://github.com/crate-ci/typos/blob/master/docs/reference.md
+
+[files]
+
+extend-exclude = [
+  "typos.toml",
+  "lib/include/",
+  "lib/libc/",
+  "lib/libcxx/",
+  "lib/libcxxabi/",
+  "lib/libtsan/",
+  "lib/libunwind/",
+  "*/**/testdata/",
+]
+
+[default]
+extend-ignore-re = [
+  # typos: ignore
+  "(?Rm)^.*(#|///?)\\s*typos: ?ignore$",
+
+  # typos: <on|off>
+  "(?s)(#|///?)\\s*typos: ?off.*?\\n\\s*(#|///?)\\s*typos: ?on",
+
+  # typos: ignore-next
+  "(#|///?)\\s*typos: ?ignore-next\\n.*",
+
+  # do not check typos in test expectations
+  "testing\\.expect[^;]*;",
+
+  # do not check typos in p-formatted floats
+  "0x1\\.[A-Za-z0-9]+p(\\+|-)\\d+",
+
+  # do not check typos in hex like identifiers
+  "[A-Za-z0-9]{12,}",
+]
+
+extend-ignore-identifiers-re = [
+  # At least 3 letters
+  "^[0-9A-Za-z]{0,2}$",
+]
+
+extend-ignore-words-re = [
+  # At least 3 letters
+  "^[0-9A-Za-z]{0,2}$",
+]
+
+[default.extend-words]
+# Assembly Instructions & CPU Architecture
+aas = "aas"   # x86 ASCII Adjust for Subtraction
+ands = "ands" # ARM assembly instruction (AND with flags)
+daa = "daa"   # x86 Decimal Adjust Accumulator
+fre = "fre"   # PowerPC Floating Reciprocal Estimate
+opf = "opf"   # SPARC operation field
+setp = "setp" # x86 Set byte if Parity
+
+# Hardware & CPU Models
+ehr = "ehr"   # C-SKY CPU model suffix (ck803ehr1, etc.)
+fpr = "fpr"   # Floating Point Register
+HSA = "HSA"   # AMD Heterogeneous System Architecture
+hve = "hve"   # AVR microcontroller suffix (atmega64hve)
+sme = "sme"   # ARM Scalable Matrix Extension
+tme = "tme"   # ARM Transactional Memory Extension
+valu = "valu" # GPU Vector ALU operations
+
+# File Formats & Standards
+aranges = "aranges" # DWARF debug address ranges section
+flate = "flate"     # DEFLATE compression format
+lod = "lod"         # Level of Detail (graphics)
+rela = "rela"       # ELF relocation format
+sover = "sover"     # Shared object version
+
+# System Constants & APIs
+acces = "acces"   # Permission denied  
+ect = "ect"       # Explicit Congestion Notification transport
+rto = "rto"       # TCP
+seh = "seh"       # Windows Structured Exception Handling
+thr = "thr"       # Thread-related contexts
+typ = "typ"       # Type field abbreviation
+wht = "wht"       # Unix whiteout file type
+wronly = "wronly" # POSIX write-only file flag
+
+# Additional Technical Terms - Windows Error Codes & System
+dne = "dne"         # RPC call failed DNE
+exced = "exced"     # Windows error code
+occured = "occured" # Windows error code
+sur = "sur"         # Big Sur
+
+# Assembly & CPU Instructions
+finitel = "finitel" # C library function (finite long double)
+olt = "olt"         # LLVM ordered less than comparison predicate
+shll = "shll"       # MIPS shift left logical instruction
+
+# Zig
+clen = "clen"               # Zig stdlib convention
+datas = "datas"             # Custom plural
+exta = "exta"               # Extended A, not extra
+fals = "fals"               # Zig compiler internals
+ffor = "ffor"               # Zig compiler internals
+iwht = "iwht"               # Zig compiler internals
+lits = "lits"               # String literals abbreviation
+panicing = "panicing"       # Alternative to panicking
+parm = "parm"               # Parameter abbreviation
+preemptable = "preemptable" # Variance of preemptible
+ser = "ser"                 # Short for Serial, not set
+strat = "strat"             # Strategy abbreviation
+
+[default.extend-identifiers]
+# System Constants (uppercase variants)
+_Qp_fle = "_Qp_fle"             # GCC
+ANDS = "ANDS"                   # ARM instruction (uppercase)
+ARANGES = "ARANGES"             # DWARF section (uppercase)
+calll = "calll"                 # x86 call instruction variant
+ECN_ECT0 = "ECN_ECT0"           # Network congestion notification
+ECN_ECT1 = "ECN_ECT1"           # Network congestion notification
+endianity = "endianity"         # DWARF 3 constant
+flate = "flate"
+MemSiz = "MemSiz"               # ELF format
+NAME_EXPORTAS = "NAME_EXPORTAS"
+NO_SEH = "NO_SEH"               # Windows exception handling flag
+numer = "numer"                 # Numerator
+O_WRONLY = "O_WRONLY"           # POSIX file flag (with prefix)
+panicing = "panicing"           # Alternative to panicking
+preemptable = "preemptable"     # Zig variant of preemptible
+SETP = "SETP"                   # x86 instruction (uppercase)
+sigfault = "sigfault"           # Keep existing
+Sur = "Sur"                     # Big Sur
+Synopsys = "Synopsys"           # Company name
+tolen = "tolen"                 # Windows API
+u32Tou64 = "u32Tou64"
