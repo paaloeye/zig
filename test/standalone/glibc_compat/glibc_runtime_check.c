@@ -56,10 +56,10 @@ static void check_fp_abi()
 static void check_strlcpy()
 {
 #if (__GLIBC__ == 2 && __GLIBC_MINOR__ >= 38) || (__GLIBC__ > 2)
-	char target[4] = {0};
-	strlcpy(target, "this is a source string", 4);
+	char target[5] = {0};
+	strlcpy(target, "this is a source string", 5);
 
-	assert(strcmp(target, "thi") == 0);
+	assert(strcmp(target, "this") == 0);
 #endif
 }
 

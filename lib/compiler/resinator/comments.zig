@@ -255,9 +255,9 @@ test "mixed" {
 test "within a string" {
     // escaped " is \"
     try testRemoveComments(
-        \\blah"//som\"/*ething*/"BLAH
+        \\blah"//some\"/*thing*/"BLAH
     ,
-        \\blah"//som\"/*ething*/"BLAH
+        \\blah"//some\"/*thing*/"BLAH
     );
 }
 
@@ -287,19 +287,19 @@ test "unfinished multiline comment" {
 
 test "crazy" {
     try testRemoveComments(
-        \\blah"/*som*/\""BLAH
+        \\blah"/*some*/\""BLAH
     ,
-        \\blah"/*som*/\""/*ething*/BLAH
+        \\blah"/*some*/\""/*thing*/BLAH
     );
 
     try testRemoveComments(
-        \\blah"/*som*/"BLAH RCDATA "BEGIN END
+        \\blah"/*some*/"BLAH RCDATA "BEGIN END
         \\
         \\
         \\hello
         \\"
     ,
-        \\blah"/*som*/"/*ething*/BLAH RCDATA "BEGIN END
+        \\blah"/*some*/"/*thing*/BLAH RCDATA "BEGIN END
         \\// comment
         \\//"blah blah" RCDATA {}
         \\hello

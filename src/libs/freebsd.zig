@@ -262,7 +262,7 @@ pub const Lib = struct {
 pub const libs = [_]Lib{
     .{ .name = "m", .sover = 5 },
     .{ .name = "stdthreads", .sover = 0 },
-    .{ .name = "thr", .sover = 3 },
+    .{ .name = "thr", .sover = 3 }, // typos: ignore
     .{ .name = "c", .sover = 7 },
     .{ .name = "dl", .sover = 1 },
     .{ .name = "rt", .sover = 1 },

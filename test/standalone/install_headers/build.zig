@@ -79,7 +79,7 @@ pub fn build(b: *std.Build) void {
     libfoo.installLibraryHeaders(libbar);
 
     const run_exe = b.addRunArtifact(exe);
-    run_exe.expectStdOutEqual("ABD12X");
+    run_exe.expectStdOutEqual("ABD12X"); // typos: ignore
     test_step.dependOn(&run_exe.step);
 
     const install_libfoo = b.addInstallArtifact(libfoo, .{

@@ -2,16 +2,16 @@ const expect = @import("std").testing.expect;
 const builtin = @import("builtin");
 
 test "@hasField" {
-    const struc = struct {
+    const @"struct" = struct {
         a: i32,
         b: []u8,
 
         pub const nope = 1;
     };
-    try expect(@hasField(struc, "a") == true);
-    try expect(@hasField(struc, "b") == true);
-    try expect(@hasField(struc, "non-existent") == false);
-    try expect(@hasField(struc, "nope") == false);
+    try expect(@hasField(@"struct", "a") == true);
+    try expect(@hasField(@"struct", "b") == true);
+    try expect(@hasField(@"struct", "non-existent") == false);
+    try expect(@hasField(@"struct", "nope") == false);
 
     const unin = union {
         a: u64,

@@ -9,7 +9,7 @@
 //!   anih( <ani_header> )
 //!   [rate( <rate_info> )]
 //!   ['seq '( <sequence_info> )]
-//!   LIST( 'fram' icon( <icon_file> ) ... )
+//!   LIST( 'fram' icon( <icon_file> ) ... ) // typos: ignore
 //! )
 
 const std = @import("std");

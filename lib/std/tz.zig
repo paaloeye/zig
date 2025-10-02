@@ -118,7 +118,7 @@ pub const Tz = struct {
             const dst = try reader.takeByte();
             if (dst != 0 and dst != 1) return error.Malformed; // rfc8536: (is)dst [...] The value MUST be 0 or 1.
             const idx = try reader.takeByte();
-            if (idx > header.counts.charcnt - 1) return error.Malformed; // rfc8536: (desig)idx [...] Each index MUST be in the range [0, "charcnt" - 1]
+            if (idx > header.counts.charcnt - 1) return error.Malformed; // rfc8536: (desig)idx [...] Each index MUST be in the range [0, "charcnt" - 1] // typos: ignore
             timetypes[i] = .{
                 .offset = offset,
                 .flags = dst,

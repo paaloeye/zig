@@ -695,7 +695,7 @@ pub const ArgIteratorWasi = struct {
 ///
 /// - https://learn.microsoft.com/en-us/cpp/cpp/main-function-command-line-args?view=msvc-170#parsing-c-command-line-arguments
 ///
-/// David Deley explains some additional undocumented quirks in great detail:
+/// David Deley explains some additional undocumented quirks in great detail: // typos: ignore
 ///
 /// - https://daviddeley.com/autohotkey/parameters/parameters.htm#WINCRULES
 pub const ArgIteratorWindows = struct {

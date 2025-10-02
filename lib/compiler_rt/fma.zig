@@ -96,6 +96,7 @@ pub fn __fmax(a: f80, b: f80, c: f80) callconv(.c) f80 {
     return @floatCast(fmaq(a, b, c));
 }
 
+/// typos: off
 /// Fused multiply-add: Compute x * y + z with a single rounding error.
 ///
 /// We use scaling to avoid overflow/underflow, along with the
@@ -103,6 +104,7 @@ pub fn __fmax(a: f80, b: f80, c: f80) callconv(.c) f80 {
 ///
 ///      Dekker, T.  A Floating-Point Technique for Extending the
 ///      Available Precision.  Numer. Math. 18, 224-242 (1971).
+/// typos: on
 pub fn fmaq(x: f128, y: f128, z: f128) callconv(.c) f128 {
     if (!math.isFinite(x) or !math.isFinite(y)) {
         return x * y + z;

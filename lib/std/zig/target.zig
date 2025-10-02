@@ -413,7 +413,7 @@ pub fn isLibCLibName(target: *const std.Target, name: []const u8) bool {
             return true;
         if (eqlIgnoreCase(ignore_case, name, "stdthreads"))
             return true;
-        if (eqlIgnoreCase(ignore_case, name, "thr"))
+        if (eqlIgnoreCase(ignore_case, name, "thr")) // typos: ignore
             return true;
         if (eqlIgnoreCase(ignore_case, name, "util"))
             return true;
