@@ -10,7 +10,7 @@ pub fn gcd(a: anytype, b: anytype) @TypeOf(a, b) {
         else => |T| T,
     };
     if (@typeInfo(N) != .int or @typeInfo(N).int.signedness != .unsigned) {
-        @compileError("`a` and `b` must be usigned integers");
+        @compileError("`a` and `b` must be unsigned integers");
     }
 
     // using an optimised form of Stein's algorithm:

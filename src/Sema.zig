@@ -28420,7 +28420,7 @@ pub fn coerce(
     };
 }
 
-const CoersionError = CompileError || error{
+const CoercionError = CompileError || error{
     /// When coerce is called recursively, this error should be returned instead of using `fail`
     /// to ensure correct types in compile errors.
     NotCoercible,
@@ -28459,7 +28459,7 @@ fn coerceExtra(
     inst: Air.Inst.Ref,
     inst_src: LazySrcLoc,
     opts: CoerceOpts,
-) CoersionError!Air.Inst.Ref {
+) CoercionError!Air.Inst.Ref {
     if (dest_ty.isGenericPoison()) return inst;
     const pt = sema.pt;
     const zcu = pt.zcu;

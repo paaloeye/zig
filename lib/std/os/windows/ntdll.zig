@@ -151,7 +151,7 @@ pub extern "ntdll" fn NtMapViewOfSection(
     CommitSize: SIZE_T,
     SectionOffset: ?*LARGE_INTEGER,
     ViewSize: *SIZE_T,
-    InheritDispostion: SECTION_INHERIT,
+    InheritDisposition: SECTION_INHERIT,
     AllocationType: ULONG,
     Win32Protect: ULONG,
 ) callconv(.winapi) NTSTATUS;
