@@ -181,8 +181,8 @@ test "preheating (success)" {
 }
 
 test "preheating (failure)" {
-    const failer = std.testing.failing_allocator;
-    try std.testing.expectError(error.OutOfMemory, MemoryPool(u32).initPreheated(failer, 5));
+    const failure = std.testing.failing_allocator;
+    try std.testing.expectError(error.OutOfMemory, MemoryPool(u32).initPreheated(failure, 5));
 }
 
 test "growable" {

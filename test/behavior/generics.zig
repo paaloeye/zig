@@ -631,7 +631,7 @@ test "generic struct captures slice of another struct" {
     comptime std.debug.assert(T.foo_ptr == &S.foo_array);
 }
 
-test "noalias paramters with generic return type" {
+test "noalias parameters with generic return type" {
     const S = struct {
         pub fn a(noalias _: *u8, im_noalias: usize) im_noalias {}
         pub fn b(noalias _: *u8, im_noalias: usize, x: *isize) x {

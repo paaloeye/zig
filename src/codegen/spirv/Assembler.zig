@@ -736,7 +736,7 @@ fn parseContextDependentNumber(ass: *Assembler) !void {
     // we can determine the width of these types by directly checking the cache.
     // This only works if the Assembler and codegen both use spv.intType and spv.floatType though.
     // We don't expect there to be many of these types, so just look it up every time.
-    // TODO: Count be improved to be a little bit more efficent.
+    // TODO: Could be improved to be a little bit more efficient.
 
     {
         var it = module.cache.int_types.iterator();

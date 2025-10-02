@@ -960,7 +960,7 @@ const Poly = struct {
         var r: usize = 0; // index into invNTTReductions
         var p = a;
 
-        // We basically do the oppposite of NTT, but postpone dividing by 2 in the
+        // We basically do the opposite of NTT, but postpone dividing by 2 in the
         // inverse of the Cooley-Tukey butterfly and accumulate that into a big
         // division by 2⁷ at the end.  See the comments in the ntt() function.
 

@@ -939,7 +939,7 @@ test "peer type resolution on switch captures ignores unused payload bits" {
     // This is runtime-known so the following store isn't comptime-known.
     var rt: u32 = 123;
     _ = &rt;
-    val = .{ .a = rt }; // will not necessarily zero remaning payload memory
+    val = .{ .a = rt }; // will not necessarily zero remaining payload memory
 
     // Fields intentionally backwards here
     const x = switch (val) {

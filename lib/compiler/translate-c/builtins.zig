@@ -4,7 +4,7 @@ const ast = @import("ast.zig");
 
 /// All builtins need to have a source so that macros can reference them
 /// but for some it is possible to directly call an equivalent Zig builtin
-/// which is preferrable.
+/// which is preferable.
 pub const Builtin = struct {
     /// The name of the builtin in `c_builtins.zig`.
     name: []const u8,

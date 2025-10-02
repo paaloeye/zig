@@ -56,7 +56,7 @@ const fixed_dist = blk: {
     break :blk .{ codes, bits };
 };
 
-// All paramters of codes can be derived matchematically, however some are faster to
+// All parameters of codes can be derived matchematically, however some are faster to
 // do via lookup table. For ReleaseSmall, we do all mathematically to save space.
 pub const LenCode = if (builtin.mode != .ReleaseSmall) LookupLenCode else ShortLenCode;
 pub const DistCode = if (builtin.mode != .ReleaseSmall) LookupDistCode else ShortDistCode;

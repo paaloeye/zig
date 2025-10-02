@@ -140,7 +140,7 @@ fn test_sigset_bits() !void {
                 try std.testing.expectEqual(test_signo, S.seen_sig);
             },
             .INVAL => {
-                // Signal won't get delviered.  Just clean up.
+                // Signal won't get delivered.  Just clean up.
                 std.posix.sigprocmask(std.posix.SIG.UNBLOCK, &block_one, null);
                 try std.testing.expectEqual(NO_SIG, S.seen_sig);
             },

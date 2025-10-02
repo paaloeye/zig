@@ -2083,7 +2083,7 @@ pub const Object = struct {
             .vector => {
                 const elem_ty = ty.elemType2(zcu);
                 // Vector elements cannot be padded since that would make
-                // @bitSizOf(elem) * len > @bitSizOf(vec).
+                // @bitSizeOf(elem) * len > @bitSizeOf(vec).
                 // Neither gdb nor lldb seem to be able to display non-byte sized
                 // vectors properly.
                 const debug_elem_type = switch (elem_ty.zigTypeTag(zcu)) {
@@ -4772,7 +4772,7 @@ pub const FuncGen = struct {
             /// The index into the jump table is the dispatch condition minus `min`.
             /// The table values are `blockaddress` constants corresponding to blocks in `case_blocks`.
             table: Builder.Constant,
-            /// `true` if `table` conatins a reference to the `else` block.
+            /// `true` if `table` contains a reference to the `else` block.
             /// In this case, the `indirectbr` must include the `else` block in its target list.
             table_includes_else: bool,
         };
@@ -11086,7 +11086,7 @@ pub const FuncGen = struct {
         comptime assert(@intFromEnum(std.builtin.PrefetchOptions.Cache.instruction) == 0);
         comptime assert(@intFromEnum(std.builtin.PrefetchOptions.Cache.data) == 1);
 
-        // LLVM fails during codegen of instruction cache prefetchs for these architectures.
+        // LLVM fails during codegen of instruction cache prefetches for these architectures.
         // This is an LLVM bug as the prefetch intrinsic should be a noop if not supported
         // by the target.
         // To work around this, don't emit llvm.prefetch in this case.
@@ -11416,7 +11416,7 @@ pub const FuncGen = struct {
             loaded;
 
         const anded = if (workaround_explicit_mask and payload_llvm_ty != load_llvm_ty) blk: {
-            // this is rendundant with llvm.trunc. But without it, llvm17 emits invalid code for powerpc.
+            // this is redundant with llvm.trunc. But without it, llvm17 emits invalid code for powerpc.
             const mask_val = try o.builder.intValue(payload_llvm_ty, -1);
             const zext_mask_val = try fg.wip.cast(.zext, mask_val, load_llvm_ty, "");
             break :blk try fg.wip.bin(.@"and", shifted, zext_mask_val, "");
@@ -12055,7 +12055,7 @@ fn llvmAllocaAddressSpace(target: *const std.Target) Builder.AddrSpace {
     return switch (target.cpu.arch) {
         // On amdgcn, locals should be generated into the private address space.
         // To make Zig not impossible to use, these are then converted to addresses in the
-        // generic address space and treates as regular pointers. This is the way that HIP also does it.
+        // generic address space and treats as regular pointers. This is the way that HIP also does it.
         .amdgcn => Builder.AddrSpace.amdgpu.private,
         else => .default,
     };

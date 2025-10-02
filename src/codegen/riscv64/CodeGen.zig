@@ -2128,7 +2128,7 @@ pub fn spillInstruction(func: *Func, reg: Register, inst: Air.Inst.Index) !void 
     const tracking = func.inst_tracking.getPtr(inst) orelse return;
     for (tracking.getRegs()) |tracked_reg| {
         if (tracked_reg.id() == reg.id()) break;
-    } else unreachable; // spilled reg not tracked with spilled instruciton
+    } else unreachable; // spilled reg not tracked with spilled instruction
     try tracking.spill(func, inst);
     try tracking.trackSpill(func, inst);
 }

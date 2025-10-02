@@ -145,7 +145,7 @@ pub fn Treap(comptime Key: type, comptime compareFn: anytype) type {
             },
 
             /// Update's the Node at this Entry in the treap with the new node (null for deleting). `new_node`
-            /// can have `undefind` content because the value will be initialized internally.
+            /// can have `undefined` content because the value will be initialized internally.
             pub fn set(self: *Entry, new_node: ?*Node) void {
                 // Update the entry's node reference after updating the treap below.
                 defer self.node = new_node;

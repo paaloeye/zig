@@ -34,7 +34,7 @@ pub fn main() !void {
         }
     }
 
-    // hasNonEmptyEnvVarContstant
+    // hasNonEmptyEnvVarConstant
     {
         try std.testing.expect(std.process.hasNonEmptyEnvVarConstant("FOO"));
         try std.testing.expect(!std.process.hasNonEmptyEnvVarConstant("FOO="));

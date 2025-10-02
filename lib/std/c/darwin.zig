@@ -1573,7 +1573,7 @@ pub const TCP = struct {
     pub const KEEPALIVE = 0x10;
     /// Connection timeout
     pub const CONNECTIONTIMEOUT = 0x20;
-    /// Time after which a conection in persist timeout will terminate.
+    /// Time after which a connection in persist timeout will terminate.
     pub const PERSIST_TIMEOUT = 0x40;
     /// Time after which TCP retransmissions will be stopped and the connection will be dropped.
     pub const RXT_CONNDROPTIME = 0x80;
@@ -1581,7 +1581,7 @@ pub const TCP = struct {
     pub const RXT_FINDROP = 0x100;
     /// Interval between keepalives
     pub const KEEPINTVL = 0x101;
-    /// Number of keepalives before clsoe
+    /// Number of keepalives before close
     pub const KEEPCNT = 0x102;
     /// Always ack every other packet
     pub const SENDMOREACKS = 0x103;

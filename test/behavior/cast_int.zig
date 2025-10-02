@@ -32,7 +32,7 @@ test "coerce i8 to i32 and @intCast back" {
     try expect(y2 == @as(i8, @intCast(x2)));
 }
 
-test "coerce non byte-sized integers accross 32bits boundary" {
+test "coerce non byte-sized integers across 32bits boundary" {
     if (builtin.zig_backend == .stage2_riscv64) return error.SkipZigTest; // TODO
 
     {
@@ -187,7 +187,7 @@ test "load non byte-sized value in struct" {
     if (builtin.zig_backend == .stage2_riscv64) return error.SkipZigTest; // TODO
 
     // note: this bug is triggered by the == operator, expectEqual will hide it
-    // using ptrCast not to depend on unitialised memory state
+    // using ptrCast not to depend on uninitialized memory state
 
     var struct0: struct {
         p: Piece,
@@ -222,7 +222,7 @@ test "load non byte-sized value in union" {
     if (builtin.zig_backend == .stage2_riscv64) return error.SkipZigTest;
 
     // note: this bug is triggered by the == operator, expectEqual will hide it
-    // using ptrCast not to depend on unitialised memory state
+    // using ptrCast not to depend on uninitialized memory state
 
     var union0: packed union {
         p: packed struct(u8) {

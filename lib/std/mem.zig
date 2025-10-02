@@ -224,10 +224,10 @@ test "Allocator alloc and remap with zero-bit type" {
     defer testing.allocator.free(values);
 
     try testing.expectEqual(10, values.len);
-    const remaped = testing.allocator.remap(values, 200);
-    try testing.expect(remaped != null);
+    const remapped = testing.allocator.remap(values, 200);
+    try testing.expect(remapped != null);
 
-    values = remaped.?;
+    values = remapped.?;
     try testing.expectEqual(200, values.len);
 }
 

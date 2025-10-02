@@ -357,7 +357,7 @@ pub const NameOrOrdinal = union(enum) {
             result +%= digit;
         }
 
-        // Anything that resolves to zero is not interpretted as a number
+        // Anything that resolves to zero is not interpreted as a number
         if (result == 0) return null;
         return NameOrOrdinal{ .ordinal = result };
     }
@@ -398,7 +398,7 @@ pub const NameOrOrdinal = union(enum) {
             result +%= digit;
         }
 
-        // Anything that resolves to zero is not interpretted as a number
+        // Anything that resolves to zero is not interpreted as a number
         if (result == 0) return null;
         return NameOrOrdinal{ .ordinal = result };
     }

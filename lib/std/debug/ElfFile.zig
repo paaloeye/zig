@@ -101,7 +101,7 @@ pub const LoadError = error{
     InvalidElfVersion,
     InvalidElfClass,
     InvalidElfEndian,
-    // The remaining errors all occur when attemping to stat or mmap a file.
+    // The remaining errors all occur when attempting to stat or mmap a file.
     SystemResources,
     MemoryMappingNotSupported,
     AccessDenied,

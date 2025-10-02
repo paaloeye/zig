@@ -406,7 +406,7 @@ const OpenbsdImpl = struct {
 const DragonflyImpl = struct {
     fn wait(ptr: *const atomic.Value(u32), expect: u32, timeout: ?u64) error{Timeout}!void {
         // Dragonfly uses a scheme where 0 timeout means wait until signaled or spurious wake.
-        // It's reporting of timeout's is also unrealiable so we use an external timing source (Timer) instead.
+        // It's reporting of timeout's is also unreliable so we use an external timing source (Timer) instead.
         var timeout_us: c_int = 0;
         var timeout_overflowed = false;
         var sleep_timer: std.time.Timer = undefined;

@@ -5789,7 +5789,7 @@ fn workerZcuCodegen(
     out: *link.ZcuTask.LinkFunc.SharedMir,
 ) void {
     var air = orig_air;
-    // We own `air` now, so we are responsbile for freeing it.
+    // We own `air` now, so we are responsible for freeing it.
     defer air.deinit(comp.gpa);
     const pt: Zcu.PerThread = .activate(comp.zcu.?, @enumFromInt(tid));
     defer pt.deactivate();

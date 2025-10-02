@@ -407,7 +407,7 @@ pub fn effectiveKind(d: *Diagnostics, message: anytype) Message.Kind {
     // Make diagnostic a warning if -Weverything is set.
     if (kind == .off and d.state.enable_all_warnings) kind = .warning;
 
-    // Upgrade warnigns to errors if -Werror is set
+    // Upgrade warnings to errors if -Werror is set
     if (kind == .warning and d.state.error_warnings) kind = .@"error";
 
     // Upgrade errors to fatal errors if -Wfatal-errors is set

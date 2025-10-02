@@ -16,7 +16,7 @@
 #include <sys/stat.h>
 #include <unistd.h>
 
-/* errno is compilcated (thread-local, dynamically provided, etc). */
+/* errno is complicated (thread-local, dynamically provided, etc). */
 static void check_errno()
 {
 	int invalid_fd = open("/doesnotexist", O_RDONLY);

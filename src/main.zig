@@ -4075,7 +4075,7 @@ fn serve(
     while (true) {
         const hdr = try server.receiveMessage();
 
-        // Lock the debug server while hanling the message.
+        // Lock the debug server while handling the message.
         if (comp.debugIncremental()) ids.mutex.lock();
         defer if (comp.debugIncremental()) ids.mutex.unlock();
 
@@ -4781,7 +4781,7 @@ fn cmdBuild(gpa: Allocator, arena: Allocator, args: []const []const u8) !void {
     // use stdout from the configuration phase for this purpose.
     //
     // However, currently, both phases are in the same process, and Run Step
-    // provides API for making the runned subprocesses inherit stdout and stderr
+    // provides API for making the run subprocesses inherit stdout and stderr
     // which means these streams are not available for passing metadata back
     // to the parent.
     //

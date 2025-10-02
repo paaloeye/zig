@@ -913,7 +913,7 @@ fn serialize(serialized_buffer: *Serialized.Buffer) Serialized {
         }
         const dest_storage = &serialized_buffer.storage[serialized_len];
         copyAtomicLoad(&dest_storage.name, &storage_ptr.name);
-        dest_storage.estimated_total_count = @atomicLoad(u32, &storage_ptr.estimated_total_count, .acquire); // sychronizes with release in `setIpcFd`
+        dest_storage.estimated_total_count = @atomicLoad(u32, &storage_ptr.estimated_total_count, .acquire); // synchronizes with release in `setIpcFd`
         dest_storage.completed_count = @atomicLoad(u32, &storage_ptr.completed_count, .monotonic);
 
         any_ipc = any_ipc or (dest_storage.getIpcFd() != null);

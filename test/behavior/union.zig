@@ -1883,7 +1883,7 @@ test "inner struct initializer uses packed union layout" {
     }
 }
 
-test "extern union initialized via reintepreted struct field initializer" {
+test "extern union initialized via reinterpreted struct field initializer" {
     if (builtin.zig_backend == .stage2_spirv) return error.SkipZigTest;
 
     const bytes = [_]u8{ 0xaa, 0xbb, 0xcc, 0xdd };
@@ -1902,7 +1902,7 @@ test "extern union initialized via reintepreted struct field initializer" {
     try expect(s.u.b == 0xaa);
 }
 
-test "packed union initialized via reintepreted struct field initializer" {
+test "packed union initialized via reinterpreted struct field initializer" {
     if (builtin.zig_backend == .stage2_aarch64) return error.SkipZigTest;
 
     const bytes = [_]u8{ 0xaa, 0xbb, 0xcc, 0xdd };

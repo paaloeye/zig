@@ -71,7 +71,7 @@ pub const Lir = struct {
             fm: FenceMode,
         },
 
-        /// the mnemonic has some special properities that can't be handled in a generic fashion
+        /// the mnemonic has some special properties that can't be handled in a generic fashion
         extra: Mnemonic,
     };
 

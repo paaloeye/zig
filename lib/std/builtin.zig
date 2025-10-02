@@ -229,7 +229,7 @@ pub const CallingConvention = union(enum(u8)) {
     aarch64_vfabi: CommonOptions,
     aarch64_vfabi_sve: CommonOptions,
 
-    // Calling convetions for the `arm`, `armeb`, `thumb`, and `thumbeb` architectures.
+    // Calling conventions for the `arm`, `armeb`, `thumb`, and `thumbeb` architectures.
     /// ARM Architecture Procedure Call Standard
     arm_aapcs: CommonOptions,
     /// ARM Architecture Procedure Call Standard Vector Floating-Point

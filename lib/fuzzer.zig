@@ -44,7 +44,7 @@ const gpa = switch (builtin.mode) {
     .ReleaseFast, .ReleaseSmall, .ReleaseSafe => std.heap.smp_allocator,
 };
 
-/// Part of `exec`, however seperate to allow it to be set before `exec` is.
+/// Part of `exec`, however separate to allow it to be set before `exec` is.
 var log_f: ?std.fs.File = null;
 var exec: Executable = .preinit;
 var inst: Instrumentation = .preinit;
@@ -249,11 +249,11 @@ const Executable = struct {
 };
 
 /// Data gathered from instrumentation functions.
-/// Seperate from Executable since its state is resetable and changes.
-/// Seperate from Fuzzer since it may be needed before fuzzing starts.
+/// Separate from Executable since its state is resettable and changes.
+/// Separate from Fuzzer since it may be needed before fuzzing starts.
 const Instrumentation = struct {
     /// Bitset of seen pcs across all runs excluding fresh pcs.
-    /// This is seperate then shared_seen_pcs because multiple fuzzing processes are likely using
+    /// This is separate then shared_seen_pcs because multiple fuzzing processes are likely using
     /// it which causes contention and unrelated pcs to our campaign being set.
     seen_pcs: []usize,
 
@@ -868,7 +868,7 @@ const Mutation = enum {
     push_few_16,
     push_few_32,
     push_few_64,
-    /// Randomizes a random contigous group of bits in a byte
+    /// Randomizes a random contiguous group of bits in a byte
     packed_set_rng_8,
     packed_set_rng_16le,
     packed_set_rng_16be,

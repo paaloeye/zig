@@ -28,7 +28,7 @@ pub const cpu_context = @import("debug/cpu_context.zig");
 /// with addresses, as well as unwinding the stack where a safe mechanism to do so exists.
 ///
 /// The Zig Standard Library provides default implementations of `SelfInfo` for common targets, but
-/// the implementation can be overriden by exposing `root.debug.SelfInfo`. Setting `SelfInfo` to
+/// the implementation can be overridden by exposing `root.debug.SelfInfo`. Setting `SelfInfo` to
 /// `void` indicates that the `SelfInfo` API is not supported.
 ///
 /// This type must expose the following declarations:

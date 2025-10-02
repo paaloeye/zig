@@ -2,7 +2,7 @@ Tests that Zig's `std.process.ArgIteratorWindows` is compatible with both the MS
 
 The method of testing is:
 - Compile a C file with `wmain` as its entry point
-- The C `wmain` calls a Zig-implemented `verify` function that takes the `argv` from `wmain` and compares it to the argv gotten from `std.proccess.argsAlloc` (which takes `kernel32.GetCommandLineW()` and splits it)
+- The C `wmain` calls a Zig-implemented `verify` function that takes the `argv` from `wmain` and compares it to the argv gotten from `std.process.argsAlloc` (which takes `kernel32.GetCommandLineW()` and splits it)
 - The compiled C program is spawned continuously as a child process by the implementation in `fuzz.zig` with randomly generated command lines
   + On Windows, the 'application name' and the 'command line' are disjoint concepts. That is, you can spawn `foo.exe` but set the command line to `bar.exe`, and `CreateProcessW` will spawn `foo.exe` but `argv[0]` will be `bar.exe`. This quirk allows us to test arbitrary `argv[0]` values as well which otherwise wouldn't be possible.
 

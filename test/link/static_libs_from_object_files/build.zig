@@ -75,7 +75,7 @@ fn add(b: *Build, test_step: *Step, files: []const LazyPath, optimize: std.built
         test_step.dependOn(&run_cmd.step);
     }
 
-    // using static librairies
+    // using static libraries
     {
         const mod_a = b.createModule(.{ .target = b.graph.host, .optimize = optimize });
         const mod_b = b.createModule(.{ .target = b.graph.host, .optimize = optimize });
@@ -114,7 +114,7 @@ fn add(b: *Build, test_step: *Step, files: []const LazyPath, optimize: std.built
         test_step.dependOn(&run_cmd.step);
     }
 
-    // using static librairies and object files
+    // using static libraries and object files
     {
         const mod_a = b.createModule(.{ .target = b.graph.host, .optimize = optimize });
         const mod_b = b.createModule(.{ .target = b.graph.host, .optimize = optimize });

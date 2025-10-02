@@ -91,8 +91,8 @@ pub const Container = enum {
         },
         zlib: std.hash.Adler32,
 
-        pub fn init(containter: Container) Hasher {
-            return switch (containter) {
+        pub fn init(container: Container) Hasher {
+            return switch (container) {
                 .gzip => .{ .gzip = .{} },
                 .zlib => .{ .zlib = .{} },
                 .raw => .raw,
@@ -149,8 +149,8 @@ pub const Container = enum {
             adler: u32 = 0,
         },
 
-        pub fn init(containter: Container) Metadata {
-            return switch (containter) {
+        pub fn init(container: Container) Metadata {
+            return switch (container) {
                 .gzip => .{ .gzip = .{} },
                 .zlib => .{ .zlib = .{} },
                 .raw => .raw,

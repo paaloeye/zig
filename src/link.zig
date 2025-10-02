@@ -1351,7 +1351,7 @@ pub const ZcuTask = union(enum) {
             /// This is initially `.pending`. When `value` is populated, the codegen thread will set
             /// this to `.ready`, and alert the queue if needed. It could also end up `.failed`.
             /// The action of storing a value (other than `.pending`) to this atomic transfers
-            /// ownership of memory assoicated with `value` to this `ZcuTask`.
+            /// ownership of memory associated with `value` to this `ZcuTask`.
             status: std.atomic.Value(enum(u8) {
                 /// We are waiting on codegen to generate MIR (or die trying).
                 pending,

@@ -2302,7 +2302,7 @@ pub const LazySrcLoc = struct {
         node_offset_var_decl_init: Ast.Node.Offset,
         /// The source location points to the given argument of a builtin function call.
         /// `builtin_call_node` points to the builtin call.
-        /// `arg_index` is the index of the argument which hte source location refers to.
+        /// `arg_index` is the index of the argument which the source location refers to.
         node_offset_builtin_call_arg: struct {
             builtin_call_node: Ast.Node.Offset,
             arg_index: u32,
@@ -2507,11 +2507,11 @@ pub const LazySrcLoc = struct {
         /// The source location points to the name of the field at the given index
         /// of the container type declaration at the base node.
         container_field_name: u32,
-        /// Like `continer_field_name`, but points at the field's default value.
+        /// Like `container_field_name`, but points at the field's default value.
         container_field_value: u32,
-        /// Like `continer_field_name`, but points at the field's type.
+        /// Like `container_field_name`, but points at the field's type.
         container_field_type: u32,
-        /// Like `continer_field_name`, but points at the field's alignment.
+        /// Like `container_field_name`, but points at the field's alignment.
         container_field_align: u32,
         /// The source location points to the type of the field at the given index
         /// of the tuple type declaration at `tuple_decl_node_offset`.

@@ -14,7 +14,7 @@
 //! Unlike with AES-GCM, nonces can be safely chosen at random with no practical limit when using AEGIS-256*.
 //! AEGIS-128* also allows for more messages to be safely encrypted when using random nonces.
 //!
-//! Unless the associated data can be fully controled by an adversary, AEGIS is believed to be key-committing,
+//! Unless the associated data can be fully controlled by an adversary, AEGIS is believed to be key-committing,
 //! making it a safer choice than most other AEADs when the key has low entropy, or can be controlled by an attacker.
 //!
 //! Finally, leaking the state does not leak the key.

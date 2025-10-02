@@ -59,7 +59,7 @@ pub fn main() !void {
     if (opt_lib_dir == null) {
         for (case.targets) |target| {
             if (target.backend == .cbe) {
-                fatal("'--zig-lib-dir' requried when using backend 'cbe'", .{});
+                fatal("'--zig-lib-dir' required when using backend 'cbe'", .{});
             }
         }
     }
@@ -879,7 +879,7 @@ fn parseExpectedError(str: []const u8, l: usize) Case.ExpectedError {
     else if (std.mem.eql(u8, error_or_note_str, "note"))
         true
     else
-        fatal("line {d}: expeted 'error' or 'note', found '{s}'", .{ l, error_or_note_str });
+        fatal("line {d}: expected 'error' or 'note', found '{s}'", .{ l, error_or_note_str });
 
     const line = std.fmt.parseInt(u32, line_str, 10) catch
         fatal("line {d}: invalid line number '{s}'", .{ l, line_str });

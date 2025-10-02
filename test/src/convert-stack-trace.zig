@@ -20,7 +20,7 @@
 //! Additionally, lines reporting unwind errors are removed:
 //!
 //!   Unwind error at address `/proc/self/exe:0x1016533` (unwind info unavailable), remaining frames may be incorrect
-//!   Cannot print stack trace: safe unwind unavilable for target
+//!   Cannot print stack trace: safe unwind unavailable for target
 //!
 //! With these transformations, the test harness can safely do string comparisons.
 

@@ -250,7 +250,7 @@ pub const Lexer = struct {
 
     pub fn next(self: *Self, comptime method: LexMethod) LexError!Token {
         switch (method) {
-            .whitespace_delimiter_only => return self.nextWhitespaceDelimeterOnly(),
+            .whitespace_delimiter_only => return self.nextWhitespaceDelimiterOnly(),
             .normal => return self.nextNormal(),
             .normal_expect_operator => return self.nextNormalWithContext(.expect_operator),
         }
@@ -263,7 +263,7 @@ pub const Lexer = struct {
         semicolon,
     };
 
-    pub fn nextWhitespaceDelimeterOnly(self: *Self) LexError!Token {
+    pub fn nextWhitespaceDelimiterOnly(self: *Self) LexError!Token {
         const start_index = self.index;
         var result = Token{
             .id = .eof,

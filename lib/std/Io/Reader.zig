@@ -281,7 +281,7 @@ pub const LimitedAllocError = Allocator.Error || ShortError || error{StreamTooLo
 ///
 /// If `limit` would be exceeded, `error.StreamTooLong` is returned instead. In
 /// such case, the next byte that would be read will be the first one to exceed
-/// `limit`, and all preceeding bytes have been discarded.
+/// `limit`, and all preceding bytes have been discarded.
 ///
 /// See also:
 /// * `appendRemaining`
@@ -314,7 +314,7 @@ pub fn allocRemainingAlignedSentinel(
 ///
 /// If `limit` is reached or exceeded, `error.StreamTooLong` is returned
 /// instead. In such case, the next byte that would be read will be the first
-/// one to exceed `limit`, and all preceeding bytes have been appended to
+/// one to exceed `limit`, and all preceding bytes have been appended to
 /// `list`.
 ///
 /// See also:
@@ -333,7 +333,7 @@ pub fn appendRemaining(
 ///
 /// If `limit` is reached or exceeded, `error.StreamTooLong` is returned
 /// instead. In such case, the next byte that would be read will be the first
-/// one to exceed `limit`, and all preceeding bytes have been appended to
+/// one to exceed `limit`, and all preceding bytes have been appended to
 /// `list`.
 ///
 /// See also:

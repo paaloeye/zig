@@ -235,7 +235,7 @@ pub fn calcEhFrameSize(elf_file: *Elf) !usize {
 }
 
 fn haveEhFrameHdrSearchTable(elf_file: *Elf) bool {
-    // Seach table generation is not implemented for the ZigObject. Also, it would be wasteful to
+    // Search table generation is not implemented for the ZigObject. Also, it would be wasteful to
     // re-do this work on every single incremental update.
     return elf_file.zigObjectPtr() == null;
 }

@@ -56,7 +56,7 @@ const ControlFlow = union(enum) {
 
             const SelectionMerge = struct {
                 /// Incoming block from the `then` label.
-                /// Note that hte incoming block from the `else` label is
+                /// Note that the incoming block from the `else` label is
                 /// either given by the next element in the stack.
                 incoming: Incoming,
                 /// The label id of the cond_br's merge block.

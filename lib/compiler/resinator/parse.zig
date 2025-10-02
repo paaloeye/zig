@@ -965,9 +965,9 @@ pub const Parser = struct {
                 .can_contain_not_expressions = true,
                 .allowed_types = .{ .number = true },
             });
-            // If there is no comma after the style paramter, the Win32 RC compiler
+            // If there is no comma after the style parameter, the Win32 RC compiler
             // could misinterpret the statement and end up skipping over at least one token
-            // that should have been interepeted as the next parameter (x). For example:
+            // that should have been interpreted as the next parameter (x). For example:
             //   CONTROL "text", 1, BUTTON, 15 30, 1, 2, 3, 4
             // the `15` is the style parameter, but in the Win32 implementation the `30`
             // is completely ignored (i.e. the `1, 2, 3, 4` are `x`, `y`, `w`, `h`).

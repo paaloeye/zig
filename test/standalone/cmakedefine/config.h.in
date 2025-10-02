@@ -44,15 +44,15 @@
 #cmakedefine01 boolstringval
 
 
-// @ substition
+// @ substitution
 
-// no substition
+// no substitution
 // @noval@
 
-// no substition
+// no substitution
 // @noval@@noval@
 
-// no substition
+// no substitution
 // @noval@.@noval@
 
 // 1
@@ -94,13 +94,13 @@
 // test10
 // @noval@@stringval@@trueval@@zeroval@
 
-// no substition
+// no substitution
 // ${noval}
 
-// no substition
+// no substitution
 // ${noval}${noval}
 
-// no substition
+// no substitution
 // ${noval}.${noval}
 
 // 1

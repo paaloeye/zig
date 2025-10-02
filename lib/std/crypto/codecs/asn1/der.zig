@@ -1,7 +1,7 @@
-//! Distinguised Encoding Rules as defined in X.690 and X.691.
+//! Distinguished Encoding Rules as defined in X.690 and X.691.
 //!
 //! Subset of Basic Encoding Rules (BER) which eliminates flexibility in
-//! an effort to acheive normality. Used in PKI.
+//! an effort to achieve normality. Used in PKI.
 const std = @import("std");
 const asn1 = @import("../asn1.zig");
 

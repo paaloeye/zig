@@ -2172,14 +2172,14 @@ fn initSpecialPhdrs(self: *Elf) !void {
 /// * .preinit_array
 /// * .ctors
 /// * .dtors
-/// The prority of inclusion is defined as part of the input section's name. For example, .init_array.10000.
+/// The priority of inclusion is defined as part of the input section's name. For example, .init_array.10000.
 /// If no priority value has been specified,
 /// * for .init_array, .fini_array and .preinit_array, we automatically assign that section max value of maxInt(i32)
 ///   and push it to the back of the queue,
 /// * for .ctors and .dtors, we automatically assign that section min value of -1
 ///   and push it to the front of the queue,
 /// crtbegin and ctrend are assigned minInt(i32) and maxInt(i32) respectively.
-/// Ties are broken by the file prority which corresponds to the inclusion of input sections in this output section
+/// Ties are broken by the file priority which corresponds to the inclusion of input sections in this output section
 /// we are about to sort.
 fn sortInitFini(self: *Elf) !void {
     const gpa = self.base.comp.gpa;
@@ -2675,7 +2675,7 @@ fn shdrToPhdrFlags(sh_flags: u64) u32 {
 }
 
 /// Returns maximum number of program headers that may be emitted by the linker.
-/// (This is an upper bound so that we can reserve enough space for the header and progam header
+/// (This is an upper bound so that we can reserve enough space for the header and program header
 /// table without running out of space and being forced to move things around.)
 fn getMaxNumberOfPhdrs() u64 {
     // The estimated maximum number of segments the linker can emit for input sections are:
@@ -2765,7 +2765,7 @@ pub fn allocateAllocSections(self: *Elf) !void {
     }
 
     // Next, calculate segment covers by scanning all alloc sections.
-    // If a section matches segment flags with the preceeding section,
+    // If a section matches segment flags with the preceding section,
     // we put it in the same segment. Otherwise, we create a new cover.
     // This algorithm is simple but suboptimal in terms of space re-use:
     // normally we would also take into account any gaps in allocated
@@ -2793,7 +2793,7 @@ pub fn allocateAllocSections(self: *Elf) !void {
     // As the base address we take the end address of the PHDR table.
     // When allocating we first find the largest required alignment
     // of any section that is contained in a cover and use it to align
-    // the start address of the segement (and first section).
+    // the start address of the segment (and first section).
     const phdr_table = &self.phdrs.items[self.phdr_indexes.table_load.int().?];
     var addr = phdr_table.p_vaddr + phdr_table.p_memsz;
 
@@ -2881,7 +2881,7 @@ pub fn allocateAllocSections(self: *Elf) !void {
                 });
 
                 if (shdr.sh_offset > 0) {
-                    // Get size actually commited to the output file.
+                    // Get size actually committed to the output file.
                     const existing_size = self.sectionSize(shndx);
                     const amt = try self.base.file.?.copyRangeAll(
                         shdr.sh_offset,
@@ -3541,7 +3541,7 @@ const RelaDyn = struct {
 };
 
 pub fn addRelaDyn(self: *Elf, opts: RelaDyn) !void {
-    try self.rela_dyn.ensureUnusedCapacity(self.base.alloctor, 1);
+    try self.rela_dyn.ensureUnusedCapacity(self.base.allocator, 1);
     self.addRelaDynAssumeCapacity(opts);
 }
 

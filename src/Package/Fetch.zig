@@ -1957,7 +1957,7 @@ const UnpackResult = struct {
         }
         if (unfiltered_errors == 0) return;
 
-        // Emmit errors to an `ErrorBundle`.
+        // Emit errors to an `ErrorBundle`.
         const eb = &f.error_bundle;
         try eb.addRootErrorMessage(.{
             .msg = try eb.addString(self.root_error_message),
@@ -2042,8 +2042,8 @@ const UnpackResult = struct {
 };
 
 test "tarball with duplicate paths" {
-    // This tarball has duplicate path 'dir1/file1' to simulate case sensitve
-    // file system on any file sytstem.
+    // This tarball has duplicate path 'dir1/file1' to simulate case sensitive
+    // file system on any file system.
     //
     //     duplicate_paths/
     //     duplicate_paths/dir1/
@@ -2079,7 +2079,7 @@ test "tarball with duplicate paths" {
 }
 
 test "tarball with excluded duplicate paths" {
-    // Same as previous tarball but has build.zig.zon wich excludes 'dir1'.
+    // Same as previous tarball but has build.zig.zon which excludes 'dir1'.
     //
     //     .paths = .{
     //        "build.zig",
@@ -2297,7 +2297,7 @@ const TestFetchBuilder = struct {
         return try root.root_dir.handle.openDir(root.sub_path, .{ .iterate = true });
     }
 
-    // Test helper, asserts thet package dir constains expected_files.
+    // Test helper, asserts that package dir contains expected_files.
     // expected_files must be sorted.
     fn expectPackageFiles(self: *TestFetchBuilder, expected_files: []const []const u8) !void {
         var package_dir = try self.packageDir();

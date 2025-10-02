@@ -1,6 +1,6 @@
 /// Register state for the native architecture, used by `std.debug` for stack unwinding.
 /// `noreturn` if there is no implementation for the native architecture.
-/// This can be overriden by exposing a declaration `root.debug.CpuContext`.
+/// This can be overridden by exposing a declaration `root.debug.CpuContext`.
 pub const Native = if (@hasDecl(root, "debug") and @hasDecl(root.debug, "CpuContext"))
     root.debug.CpuContext
 else switch (native_arch) {

@@ -29,7 +29,7 @@ fn add(b: *std.Build, test_step: *std.Build.Step, optimize: std.builtin.Optimize
 
     const check_lib = lib.checkObject();
 
-    // ensure global exists and its initial value is equal to explitic stack size
+    // ensure global exists and its initial value is equal to explicit stack size
     check_lib.checkInHeaders();
     check_lib.checkExact("Section global");
     check_lib.checkExact("entries 1");

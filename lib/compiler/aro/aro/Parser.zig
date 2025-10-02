@@ -657,7 +657,7 @@ fn addList(p: *Parser, nodes: []const Node.Index) Allocator.Error!Tree.Node.Rang
     return Tree.Node.Range{ .start = start, .end = end };
 }
 
-/// Recursively sets the defintion field of `tentative_decl` to `definition`.
+/// Recursively sets the definition field of `tentative_decl` to `definition`.
 pub fn setTentativeDeclDefinition(p: *Parser, tentative_decl: Node.Index, definition: Node.Index) void {
     const node_data = &p.tree.nodes.items(.data)[@intFromEnum(tentative_decl)];
     switch (p.tree.nodes.items(.tag)[@intFromEnum(tentative_decl)]) {
@@ -674,7 +674,7 @@ pub fn setTentativeDeclDefinition(p: *Parser, tentative_decl: Node.Index, defini
     }
 }
 
-/// Clears the defintion field of declarations that were not defined so that
+/// Clears the definition field of declarations that were not defined so that
 /// the field always contains a _def if present.
 fn clearNonTentativeDefinitions(p: *Parser) void {
     const tags = p.tree.nodes.items(.tag);
@@ -1262,7 +1262,7 @@ fn decl(p: *Parser) Error!bool {
                     };
                 }
             }
-            // Update the functio type to contain the declared parameters.
+            // Update the function type to contain the declared parameters.
             p.func.qt = try p.comp.type_store.put(gpa, .{ .func = .{
                 .kind = .normal,
                 .params = new_params,
@@ -2488,7 +2488,7 @@ fn recordSpec(p: *Parser) Error!QualType {
         for (fields) |field| {
             if (field.qt.hasIncompleteSize(p.comp) and !field.qt.is(p.comp, .array)) break :blk true;
         }
-        // Set fields and a dummy layout before addign attributes.
+        // Set fields and a dummy layout before adding attributes.
         record_ty.fields = fields;
         record_ty.layout = .{
             .size_bits = 8,
@@ -6146,7 +6146,7 @@ pub const Result = struct {
                     return a.invalidBinTy(tok, b, p);
                 }
 
-                // comparisons between floats and pointes not allowed
+                // comparisons between floats and pointers not allowed
                 if (a_sk == .none or b_sk == .none or (a_sk.isFloat() and b_sk.isPointer()) or (b_sk.isFloat() and a_sk.isPointer()))
                     return a.invalidBinTy(tok, b, p);
                 if (a_sk == .nullptr_t or b_sk == .nullptr_t) return a.invalidBinTy(tok, b, p);

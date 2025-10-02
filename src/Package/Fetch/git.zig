@@ -774,7 +774,7 @@ pub const Session = struct {
             const request_uri_path = try std.fmt.allocPrint(arena, "{f}", .{
                 std.fmt.alt(request.uri.path, .formatPath),
             });
-            if (!mem.endsWith(u8, request_uri_path, "/info/refs")) return error.UnparseableRedirect;
+            if (!mem.endsWith(u8, request_uri_path, "/info/refs")) return error.UnparsableRedirect;
             var new_uri = request.uri;
             new_uri.path = .{ .percent_encoded = request_uri_path[0 .. request_uri_path.len - "/info/refs".len] };
             session.location = try .init(arena, new_uri);

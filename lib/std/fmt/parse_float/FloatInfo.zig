@@ -28,21 +28,21 @@ minimum_exponent: comptime_int,
 
 // Round-to-even only happens for negative values of q
 // when q ≥ −4 in the 64-bit case and when q ≥ −17 in
-// the 32-bitcase.
+// the 32-bit case.
 //
-// When q ≥ 0,we have that 5^q ≤ 2m+1. In the 64-bit case,we
-// have 5^q ≤ 2m+1 ≤ 2^54 or q ≤ 23. In the 32-bit case,we have
-// 5^q ≤ 2m+1 ≤ 2^25 or q ≤ 10.
+// When q ≥ 0, we have that 5^q ≤ 2m+1. In the 64-bit case,
+// we have 5^q ≤ 2m+1 ≤ 2^54 or q ≤ 23. In the 32-bit case,
+// we have 5^q ≤ 2m+1 ≤ 2^25 or q ≤ 10.
 //
 // When q < 0, we have w ≥ (2m+1)×5^−q. We must have that w < 2^64
 // so (2m+1)×5^−q < 2^64. We have that 2m+1 > 2^53 (64-bit case)
-// or 2m+1 > 2^24 (32-bit case). Hence,we must have 2^53×5^−q < 2^64
+// or 2m+1 > 2^24 (32-bit case). Hence, we must have 2^53×5^−q < 2^64
 // (64-bit) and 2^24×5^−q < 2^64 (32-bit). Hence we have 5^−q < 2^11
-// or q ≥ −4 (64-bit case) and 5^−q < 2^40 or q ≥ −17 (32-bitcase).
+// or q ≥ −4 (64-bit case) and 5^−q < 2^40 or q ≥ −17 (32-bit case).
 //
 // Thus we have that we only need to round ties to even when
 // we have that q ∈ [−4,23](in the 64-bit case) or q∈[−17,10]
-// (in the 32-bit case). In both cases,the power of five(5^|q|)
+// (in the 32-bit case). In both cases, the power of five(5^|q|)
 // fits in a 64-bit word.
 min_exponent_round_to_even: comptime_int,
 max_exponent_round_to_even: comptime_int,

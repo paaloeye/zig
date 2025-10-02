@@ -897,7 +897,7 @@ pub const all_features = blk: {
     };
     result[@intFromEnum(Feature.nv)] = .{
         .llvm_name = "nv",
-        .description = "Enable Armv8.4-A Nested Virtualization Enchancement",
+        .description = "Enable Armv8.4-A Nested Virtualization Enhancement",
         .dependencies = featureSet(&[_]Feature{}),
     };
     result[@intFromEnum(Feature.occmo)] = .{

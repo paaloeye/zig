@@ -256,7 +256,7 @@ pub fn flush(
     const ip = &linker.base.comp.zcu.?.intern_pool;
     for (ip.global_error_set.getNamesFromMainThread()) |name| {
         // Errors can contain pretty much any character - to encode them in a string we must escape
-        // them somehow. Easiest here is to use some established scheme, one which also preseves the
+        // them somehow. Easiest here is to use some established scheme, one which also preserves the
         // name if it contains no strange characters is nice for debugging. URI encoding fits the bill.
         // We're using : as separator, which is a reserved character.
         error_info.writer.writeByte(':') catch return error.OutOfMemory;

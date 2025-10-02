@@ -579,7 +579,7 @@ pub const Nav = struct {
         return nav.getExtern(ip);
     }
 
-    /// Always returns `null` for `status == .type_resolved`. This function is inteded
+    /// Always returns `null` for `status == .type_resolved`. This function is intended
     /// to be used by code generation, since semantic analysis will ensure that any `Nav`
     /// which is potentially `extern` is fully resolved.
     /// Asserts that `status != .unresolved`.
@@ -6169,7 +6169,7 @@ pub const Tag = enum(u8) {
             /// Dependency loop detection when resolving struct layout.
             layout_wip: bool = false,
             /// Indicates whether `size`, `alignment`, runtime field order, and
-            /// field offets are populated.
+            /// field offsets are populated.
             layout_resolved: bool = false,
             /// Dependency loop detection when resolving field inits.
             field_inits_wip: bool = false,
@@ -9881,7 +9881,7 @@ pub const WipEnumType = struct {
     };
 
     /// Returns the already-existing field with the same name or value, if any.
-    /// If the enum is automatially numbered, `value` must be `.none`.
+    /// If the enum is automatically numbered, `value` must be `.none`.
     /// Otherwise, the type of `value` must be the integer tag type of the enum.
     pub fn nextField(wip: WipEnumType, ip: *InternPool, name: NullTerminatedString, value: Index) ?FieldConflict {
         const unwrapped_index = wip.index.unwrap(ip);

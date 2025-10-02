@@ -12,7 +12,7 @@
 //   for is of length `seq_bytes`. If a match is made, a longer match is also checked for at
 //   the next byte (lazy matching) if the last match does not meet the `Options.lazy` threshold.
 //
-//   Up to `block_token` tokens are accumalated in `buffered_tokens` and are outputted in
+//   Up to `block_token` tokens are accumulated in `buffered_tokens` and are outputted in
 //   `write_block` which determines the optimal block type and frequencies.
 
 const builtin = @import("builtin");
@@ -108,7 +108,7 @@ const BitWriter = struct {
         b.buffered = @intCast(combined >> (combined_bits - b.buffered_n));
     }
 
-    /// Assserts one byte can be written to `b.otuput` without rebasing.
+    /// Assserts one byte can be written to `b.output` without rebasing.
     pub fn byteAlign(b: *BitWriter) void {
         b.output.unusedCapacitySlice()[0] = b.buffered;
         b.output.advance(@intFromBool(b.buffered_n != 0));
@@ -124,7 +124,7 @@ const BitWriter = struct {
         clen_codes: [19]u16,
         clen_bits: [19]u4,
     ) Writer.Error!void {
-        // Write the first four clen entries seperately since they are always present,
+        // Write the first four clen entries separately since they are always present,
         // and writing them all at once takes too many bits.
         try b.write(clen_bits[token.codegen_order[0]] |
             @shlExact(@as(u6, clen_bits[token.codegen_order[1]]), 3) |
@@ -155,7 +155,7 @@ const BitWriter = struct {
     }
 };
 
-/// Number of tokens to accumulate before outputing as a block.
+/// Number of tokens to accumulate before outputting as a block.
 /// The maximum value is `math.maxInt(u16) - 1` since one token is reserved for end-of-block.
 const block_tokens: u16 = 1 << 15;
 const lookup_hash_bits = 15;
@@ -195,7 +195,7 @@ const BlockHeader = packed struct(u3) {
 
 fn outputMatch(c: *Compress, dist: u15, len: u8) Writer.Error!void {
     // This must come first. Instead of ensuring a full block is never left buffered,
-    // draining it is defered to allow end of stream to be indicated.
+    // draining it is deferred to allow end of stream to be indicated.
     if (c.buffered_tokens.n == block_tokens) {
         @branchHint(.unlikely); // LLVM 21 optimizes this branch as the more likely without
         try c.writeBlock(false);
@@ -239,7 +239,7 @@ fn hash(x: u32) Hash {
 
 /// Trades between speed and compression size.
 ///
-/// Default paramaters are [taken from zlib]
+/// Default parameters are [taken from zlib]
 /// (https://github.com/madler/zlib/blob/v1.3.1/deflate.c#L112)
 pub const Options = struct {
     /// Perform less lookups when a match of at least this length has been found.
@@ -279,7 +279,7 @@ pub fn init(
     assert(buffer.len >= flate.max_window_len);
 
     // note that disallowing some of these simplifies matching logic
-    assert(opts.chain != 0); // use `Huffman`, disallowing this simplies matching
+    assert(opts.chain != 0); // use `Huffman`, disallowing this simplifies matching
     assert(opts.good >= 3 and opts.nice >= 3); // a match will (usually) not be found
     assert(opts.good <= 258 and opts.nice <= 258); // a longer match will not be found
     assert(opts.lazy <= opts.nice); // a longer match will (usually) not be found
@@ -465,7 +465,7 @@ fn addHash(c: *Compress, i: usize, h: Hash) void {
     const l = &c.lookup;
     l.chain_pos +%= 1;
 
-    // Equivilent to the below, however LLVM 21 does not optimize `@subWithOverflow` well at all.
+    // Equivalent to the below, however LLVM 21 does not optimize `@subWithOverflow` well at all.
     // const replaced_i, const no_replace = @subWithOverflow(i, flate.history_len);
     // if (no_replace == 0) {
     if (i >= flate.history_len) {
@@ -478,7 +478,7 @@ fn addHash(c: *Compress, i: usize, h: Hash) void {
         const replaced_seq: Seq = @intCast(replaced_u32 >> (32 - @bitSizeOf(Seq)));
 
         const replaced_h = hash(replaced_seq);
-        // The following is equivilent to the below since LLVM 21 doesn't optimize it well.
+        // The following is equivalent to the below since LLVM 21 doesn't optimize it well.
         // l.head[replaced_h].is_null = l.head[replaced_h].is_null or
         //     l.head[replaced_h].int() == l.chain_pos;
         const empty_head = l.head[replaced_h].int() == l.chain_pos;
@@ -650,7 +650,7 @@ fn matchAndAddHash(c: *Compress, i: usize, h: Hash, gt: u16, max_chain: u16, goo
 
             if (chain_limit == 0) break;
             const next_chain_index = l.chain_pos -% @as(u15, @intCast(dist));
-            // Equivilent to the below, however LLVM 21 optimizes the below worse.
+            // Equivalent to the below, however LLVM 21 optimizes the below worse.
             // if (l.chain[next_chain_index].is_null) break;
             // dist, const out_of_window = @addWithOverflow(dist, l.chain[next_chain_index].value);
             // if (out_of_window == 1) break;
@@ -879,7 +879,7 @@ fn writeBlock(c: *Compress, eos: bool) Writer.Error!void {
         assert(for (toks.lit_freqs[257..]) |f| (if (f != 0) break false) else true);
 
         // No matches. If the stored size is smaller than the huffman-encoded version, it will be
-        // outputed in a store block. This is not done with matches since the original input would
+        // outputted in a store block. This is not done with matches since the original input would
         // need to be stored since the window may slid, and it may also exceed 65535 bytes. This
         // should be OK since most inputs with matches should be more compressable anyways.
         const stored_align_bits = -%(c.bit_writer.buffered_n +% 3);
@@ -990,8 +990,8 @@ fn writeBlock(c: *Compress, eos: bool) Writer.Error!void {
 /// The approach for building the huffman tree is [taken from zlib]
 /// (https://github.com/madler/zlib/blob/v1.3.1/trees.c#L625) with some modifications.
 const huffman = struct {
-    const max_leafs = 286;
-    const max_nodes = max_leafs * 2;
+    const max_leaves = 286;
+    const max_nodes = max_leaves * 2;
 
     const Node = struct {
         freq: u16,
@@ -1040,10 +1040,10 @@ const huffman = struct {
         for (freqs, out_codes, out_bits) |_, _, n| assert(n == 0);
         assert(out_codes.len <= @as(u16, 1) << max_bits);
 
-        // Indexes 0..freqs are leafs, indexes max_leafs.. are internal nodes.
+        // Indexes 0..freqs are leaves, indexes max_leaves.. are internal nodes.
         var tree_nodes: [max_nodes]Node = undefined;
         var tree_parent_nodes: [max_nodes]Node.Index = undefined;
-        var nodes_end: u16 = max_leafs;
+        var nodes_end: u16 = max_leaves;
         // Dual-purpose buffer. Nodes are ordered by least frequency or when equal, least depth.
         // The start is a min heap of level-zero nodes.
         // The end is a sorted buffer of nodes with the greatest first.
@@ -1119,16 +1119,16 @@ const huffman = struct {
         sorted: []Node.Index,
         max_bits: u4,
     ) void {
-        var internal_node_bits: [max_nodes - max_leafs]u4 = undefined;
+        var internal_node_bits: [max_nodes - max_leaves]u4 = undefined;
         var overflowed: u16 = 0;
 
-        internal_node_bits[sorted[0] - max_leafs] = 0; // root
+        internal_node_bits[sorted[0] - max_leaves] = 0; // root
         for (sorted[1..]) |i| {
-            const parent_bits = internal_node_bits[parent_nodes[i] - max_leafs];
+            const parent_bits = internal_node_bits[parent_nodes[i] - max_leaves];
             overflowed += @intFromBool(parent_bits == max_bits);
             const bits = parent_bits + @intFromBool(parent_bits != max_bits);
-            bit_counts[bits] += @intFromBool(i < max_leafs);
-            (if (i >= max_leafs) &internal_node_bits[i - max_leafs] else &out_bits[i]).* = bits;
+            bit_counts[bits] += @intFromBool(i < max_leaves);
+            (if (i >= max_leaves) &internal_node_bits[i - max_leaves] else &out_bits[i]).* = bits;
         }
 
         if (overflowed == 0) {
@@ -1160,13 +1160,13 @@ const huffman = struct {
             var remaining = all;
             while (remaining != 0) {
                 defer i += 1;
-                if (sorted[i] >= max_leafs) continue;
+                if (sorted[i] >= max_leaves) continue;
                 out_bits[sorted[i]] = @intCast(bits);
                 remaining -= 1;
             }
         }
-        assert(for (sorted[i..]) |n| { // all leafs consumed
-            if (n < max_leafs) break false;
+        assert(for (sorted[i..]) |n| { // all leaves consumed
+            if (n < max_leaves) break false;
         } else true);
     }
 
@@ -1258,7 +1258,7 @@ const huffman = struct {
         @disableInstrumentation();
         var r: Io.Reader = .fixed(freqs);
         var freqs_limit: u16 = 65535;
-        var freqs_buf: [max_leafs]u16 = undefined;
+        var freqs_buf: [max_leaves]u16 = undefined;
         var nfreqs: u15 = 0;
 
         const params: packed struct(u8) {
@@ -1280,8 +1280,8 @@ const huffman = struct {
                 break;
         }
 
-        var codes_buf: [max_leafs]u16 = undefined;
-        var bits_buf: [max_leafs]u4 = @splat(0);
+        var codes_buf: [max_leaves]u16 = undefined;
+        var bits_buf: [max_leaves]u4 = @splat(0);
         const total_bits, const last_nonzero = build(
             freqs_buf[0..nfreqs],
             codes_buf[0..nfreqs],
@@ -1817,7 +1817,7 @@ fn testFuzzedRawInput(data_buf: *const [4 * 65536]u8, input: []const u8) !void {
         }
 
         /// Note that this implementation is somewhat dependent on the implementation of
-        /// `Raw` by expecting headers / footers to be continous in data elements. It
+        /// `Raw` by expecting headers / footers to be continuous in data elements. It
         /// also expects the header to be the same as `flate.Container.header` and not
         /// for multiple streams to be concatenated.
         fn drain(w: *Writer, data: []const []const u8, splat: usize) Writer.Error!usize {
@@ -1970,7 +1970,7 @@ fn testFuzzedRawInput(data_buf: *const [4 * 65536]u8, input: []const u8) !void {
                 10 * (1 << 16))
             {
                 // Skip this vector to avoid this test taking too long.
-                // 10 maximum sized blocks is choosen as the limit since it is two more
+                // 10 maximum sized blocks is chosen as the limit since it is two more
                 // than the maximum the implementation can output in one drain.
                 splat = 1;
                 break :add_vec;

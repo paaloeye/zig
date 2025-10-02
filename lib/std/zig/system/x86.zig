@@ -518,11 +518,11 @@ fn detectNativeFeatures(cpu: *Target.Cpu, os_tag: Target.Os.Tag) void {
         setFeature(cpu, .movdir64b, bit(leaf.ecx, 28));
         setFeature(cpu, .enqcmd, bit(leaf.ecx, 29));
 
-        // There are two CPUID leafs which information associated with the pconfig
+        // There are two CPUID leaves which information associated with the pconfig
         // instruction:
         // EAX=0x7, ECX=0x0 indicates the availability of the instruction (via the 18th
         // bit of EDX), while the EAX=0x1b leaf returns information on the
-        // availability of specific pconfig leafs.
+        // availability of specific pconfig leaves.
         // The target feature here only refers to the the first of these two.
         // Users might need to check for the availability of specific pconfig
         // leaves using cpuid, since that information is ignored while

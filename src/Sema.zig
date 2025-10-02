@@ -1034,7 +1034,7 @@ fn analyzeBodyRuntimeBreak(sema: *Sema, block: *Block, body: []const Zir.Inst.In
     return sema.branch_hint orelse .none;
 }
 
-/// Semantically analyze a ZIR function body. It is guranteed by AstGen that such a body cannot
+/// Semantically analyze a ZIR function body. It is guaranteed by AstGen that such a body cannot
 /// trigger comptime control flow to move above the function body.
 pub fn analyzeFnBody(
     sema: *Sema,
@@ -4100,7 +4100,7 @@ fn resolveComptimeKnownAllocPtr(sema: *Sema, block: *Block, alloc: Air.Inst.Ref,
                 const maybe_union_ty = Value.fromInterned(decl_parent_ptr).typeOf(zcu).childType(zcu);
                 if (zcu.typeToUnion(maybe_union_ty)) |union_obj| {
                     // As this is a union field, we must store to the pointer now to set the tag.
-                    // The payload value will be stored later, so undef is a sufficent payload for now.
+                    // The payload value will be stored later, so undef is a sufficient payload for now.
                     const payload_ty: Type = .fromInterned(union_obj.field_types.get(&zcu.intern_pool)[idx]);
                     const payload_val = try pt.undefValue(payload_ty);
                     const tag_val = try pt.enumValueFieldIndex(.fromInterned(union_obj.enum_tag_ty), idx);
@@ -9154,7 +9154,7 @@ fn checkMergeAllowed(sema: *Sema, block: *Block, src: LazySrcLoc, peer_ty: Type)
     }
 
     return sema.failWithOwnedErrorMsg(block, msg: {
-        const msg = try sema.errMsg(src, "value with non-mergable pointer type '{f}' depends on runtime control flow", .{peer_ty.fmt(pt)});
+        const msg = try sema.errMsg(src, "value with non-mergeable pointer type '{f}' depends on runtime control flow", .{peer_ty.fmt(pt)});
         errdefer msg.destroy(sema.gpa);
 
         const runtime_src = block.runtime_cond orelse block.runtime_loop.?;
@@ -11356,7 +11356,7 @@ fn zirSwitchBlock(sema: *Sema, block: *Block, inst: Zir.Inst.Index, operand_is_r
 
         // We always use `simple` in the comptime case, because as far as the dispatching logic
         // is concerned, it really is dispatching a single prong. `resolveSwitchComptime` will
-        // be resposible for recursively resolving different prongs as needed.
+        // be responsible for recursively resolving different prongs as needed.
         break :op .{
             .{ .simple = .{
                 .by_val = val,
@@ -16112,7 +16112,7 @@ fn analyzeArithmetic(
     // * Otherwise, if one operand is comptime-known `undefined`, we trigger a compile error if this
     //   operator can ever possibly trigger IB, or otherwise return comptime-known `undefined`.
     //
-    // * No other comptime operand detemines a comptime result; e.g. `0 * x` isn't always `0` because
+    // * No other comptime operand determines a comptime result; e.g. `0 * x` isn't always `0` because
     //   of `undefined`. Therefore, the remaining cases all become runtime operations.
 
     const is_int = switch (scalar_tag) {
@@ -19008,7 +19008,7 @@ fn analyzeRet(
 }
 
 fn floatOpAllowed(tag: Zir.Inst.Tag) bool {
-    // extend this swich as additional operators are implemented
+    // extend this switch as additional operators are implemented
     return switch (tag) {
         .add, .sub, .mul, .div, .div_exact, .div_trunc, .div_floor, .mod, .rem, .mod_rem => true,
         else => false,
@@ -21593,7 +21593,7 @@ fn reifyStruct(
             if (!any_default_inits) break :d .none;
             const ptr_val = field_default_value_val.optionalValue(zcu) orelse break :d .none;
             const ptr_ty = try pt.singleConstPtrType(field_ty);
-            // Asserted comptime-dereferencable above.
+            // Asserted comptime-dereferenceable above.
             const val = (try sema.pointerDeref(block, src, ptr_val, ptr_ty)).?;
             // We already resolved this for deduplication, so we may as well do it now.
             break :d (try sema.resolveLazyValue(val)).toIntern();
@@ -30463,7 +30463,7 @@ fn markMaybeComptimeAllocRuntime(sema: *Sema, block: *Block, alloc_inst: Air.Ins
     }
 }
 
-/// Traverse an arbitrary number of bitcasted pointers and return the underyling vector
+/// Traverse an arbitrary number of bitcasted pointers and return the underlying vector
 /// pointer. Only if the final element type matches the vector element type, and the
 /// lengths match.
 fn obtainBitCastedVectorPtr(sema: *Sema, ptr: Air.Inst.Ref) ?Air.Inst.Ref {
@@ -32309,7 +32309,7 @@ fn cmpNumeric(
     const maybe_lhs_val = try sema.resolveValue(lhs);
     const maybe_rhs_val = try sema.resolveValue(rhs);
 
-    // If the LHS is const, check if there is a guaranteed result which does not depend on ths RHS value.
+    // If the LHS is const, check if there is a guaranteed result which does not depend on the RHS value.
     if (maybe_lhs_val) |lhs_val| {
         // Result based on comparison exceeding type bounds
         if (!lhs_val.isUndef(zcu) and (lhs_ty_tag == .int or lhs_ty_tag == .comptime_int) and rhs_ty.isInt(zcu)) {
@@ -32330,7 +32330,7 @@ fn cmpNumeric(
         };
     }
 
-    // If the RHS is const, check if there is a guaranteed result which does not depend on ths LHS value.
+    // If the RHS is const, check if there is a guaranteed result which does not depend on the LHS value.
     if (maybe_rhs_val) |rhs_val| {
         // Result based on comparison exceeding type bounds
         if (!rhs_val.isUndef(zcu) and (rhs_ty_tag == .int or rhs_ty_tag == .comptime_int) and lhs_ty.isInt(zcu)) {

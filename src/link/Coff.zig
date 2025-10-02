@@ -1528,7 +1528,7 @@ pub fn updateExports(
             const sym_index = if (coff.getGlobalIndex(exp_name)) |global_index| ind: {
                 const global = coff.globals.items[global_index];
                 // TODO this is just plain wrong as it all should happen in a single `resolveSymbols`
-                // pass. This will go away once we abstact away Zig's incremental compilation into
+                // pass. This will go away once we abstract away Zig's incremental compilation into
                 // its own module.
                 if (global.file == null and coff.getSymbol(global).section_number == .UNDEFINED) {
                     _ = coff.unresolved.swapRemove(global_index);
@@ -3157,7 +3157,7 @@ const msdos_stub: [120]u8 = .{
         0xcd, 0x21, // int 0x21
         // Set AH to 0x4c which is the system call code for exiting, and set AL to 0x01 which is the exit code.
         0xb8, 0x01, 0x4c, // mov ax, 0x4c01
-        // Peform the system call to exit the program with exit code 1.
+        // Perform the system call to exit the program with exit code 1.
         0xcd, 0x21, // int 0x21
     }
     // Message to print.

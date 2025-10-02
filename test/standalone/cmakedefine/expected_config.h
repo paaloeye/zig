@@ -44,15 +44,15 @@
 #define boolstringval 1
 
 
-// @ substition
+// @ substitution
 
-// no substition
+// no substitution
 // 
 
-// no substition
+// no substitution
 // 
 
-// no substition
+// no substitution
 // .
 
 // 1
@@ -94,13 +94,13 @@
 // test10
 // test10
 
-// no substition
+// no substitution
 // 
 
-// no substition
+// no substitution
 // 
 
-// no substition
+// no substitution
 // .
 
 // 1

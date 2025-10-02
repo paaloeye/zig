@@ -1047,7 +1047,7 @@ fn addTbd(self: *MachO, lib: SystemLib, explicit: bool, handle: File.HandleIndex
 }
 
 /// According to ld64's manual, public (i.e., system) dylibs/frameworks are hoisted into the final
-/// image unless overriden by -no_implicit_dylibs.
+/// image unless overridden by -no_implicit_dylibs.
 fn isHoisted(self: *MachO, install_name: []const u8) bool {
     if (self.no_implicit_dylibs) return true;
     if (fs.path.dirname(install_name)) |dirname| {

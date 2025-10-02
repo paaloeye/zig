@@ -2778,7 +2778,7 @@ const Result = struct {
     inst: Air.Inst.Index,
     block: Block,
 
-    /// The return value has `block` initialized to `undefined`; it is the caller's reponsibility
+    /// The return value has `block` initialized to `undefined`; it is the caller's responsibility
     /// to initialize it.
     fn init(l: *Legalize, ty: Type, parent_block: *Block) Result {
         return .{
@@ -2803,7 +2803,7 @@ const Loop = struct {
     inst: Air.Inst.Index,
     block: Block,
 
-    /// The return value has `block` initialized to `undefined`; it is the caller's reponsibility
+    /// The return value has `block` initialized to `undefined`; it is the caller's responsibility
     /// to initialize it.
     fn init(l: *Legalize, parent_block: *Block) Loop {
         return .{
@@ -2831,7 +2831,7 @@ const CondBr = struct {
     else_block: Block,
 
     /// The return value has `then_block` and `else_block` initialized to `undefined`; it is the
-    /// caller's reponsibility to initialize them.
+    /// caller's responsibility to initialize them.
     fn init(l: *Legalize, operand: Air.Inst.Ref, parent_block: *Block, hints: Air.CondBr.BranchHints) CondBr {
         return .{
             .inst = parent_block.add(l, .{

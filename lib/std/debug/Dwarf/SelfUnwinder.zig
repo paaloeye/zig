@@ -192,7 +192,7 @@ fn nextInner(unwinder: *SelfUnwinder, gpa: Allocator, cache_entry: *const CacheE
 
     // If unspecified, we'll use the default rule for the return address register, which is
     // typically equivalent to `.undefined` (meaning there is no return address), but may be
-    // overriden by ABIs.
+    // overridden by ABIs.
     var has_return_address: bool = builtin.cpu.arch.isAARCH64() and
         return_address_register >= 19 and
         return_address_register <= 28;

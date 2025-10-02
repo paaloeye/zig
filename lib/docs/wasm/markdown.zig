@@ -1063,7 +1063,7 @@ test "backslash escapes" {
         \\\- Not a list item.
         \\\| Not a table. |
         \\| Also not a table. \|
-        \\Any \punctuation\ characte\r can be escaped:
+        \\Any \punctuation\ character\r can be escaped:
         \\\!\"\#\$\%\&\'\(\)\*\+\,\-\.\/\:\;\<\=\>\?\@\[\\\]\^\_\`\{\|\}\~
         \\
     ,
@@ -1076,7 +1076,7 @@ test "backslash escapes" {
         \\- Not a list item.
         \\| Not a table. |
         \\| Also not a table. |
-        \\Any \punctuation\ characte\r can be escaped:
+        \\Any \punctuation\ character\r can be escaped:
         \\!&quot;#$%&amp;'()*+,-./:;&lt;=&gt;?@[\]^_`{|}~</p>
         \\
     );

@@ -2146,7 +2146,7 @@ pub const Compiler = struct {
     pub fn writeMenuItem(self: *Compiler, node: *Node, writer: *std.Io.Writer, is_last_of_parent: bool) !void {
         switch (node.id) {
             .menu_item_separator => {
-                // This is the 'alternate compability form' of the separator, see
+                // This is the 'alternate compatibility form' of the separator, see
                 // https://devblogs.microsoft.com/oldnewthing/20080710-00/?p=21673
                 //
                 // The 'correct' way is to set the MF_SEPARATOR flag, but the Win32 RC

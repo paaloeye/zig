@@ -1189,8 +1189,8 @@ fn airByteSwap(self: *Self, inst: Air.Inst.Index) !void {
     // We have hardware byteswapper in SPARCv9, don't let mainstream compilers mislead you.
     // That being said, the strategy to lower this is:
     // - If src is an immediate, comptime-swap it.
-    // - If src is in memory then issue an LD*A with #ASI_P_[oppposite-endian]
-    // - If src is a register then issue an ST*A with #ASI_P_[oppposite-endian]
+    // - If src is in memory then issue an LD*A with #ASI_P_[opposite-endian]
+    // - If src is a register then issue an ST*A with #ASI_P_[opposite-endian]
     //   to a stack slot, then follow with a normal load from said stack slot.
     //   This is because on some implementations, ASI-tagged memory operations are non-piplelinable
     //   and loads tend to have longer latency than stores, so the sequence will minimize stall.

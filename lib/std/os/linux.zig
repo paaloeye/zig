@@ -690,7 +690,7 @@ pub const futex_param4 = extern union {
 /// The futex v1 syscall, see also the newer the futex2_{wait,wakeup,requeue,waitv} syscalls.
 ///
 /// The futex_op parameter is a sub-command and flags.  The sub-command
-/// defines which of the subsequent paramters are relevant.
+/// defines which of the subsequent parameters are relevant.
 pub fn futex(uaddr: *const anyopaque, futex_op: FUTEX_OP, val: u32, val2timeout: futex_param4, uaddr2: ?*const anyopaque, val3: u32) usize {
     return syscall6(
         if (@hasField(SYS, "futex")) .futex else .futex_time64,
@@ -1938,7 +1938,7 @@ pub fn sigemptyset() sigset_t {
     return [_]SigsetElement{0} ** sigset_len;
 }
 
-/// Zig's version of sigfillset.  Returns initalized sigset_t.
+/// Zig's version of sigfillset.  Returns initialized sigset_t.
 pub fn sigfillset() sigset_t {
     return [_]SigsetElement{~@as(SigsetElement, 0)} ** sigset_len;
 }
@@ -5348,7 +5348,7 @@ pub const clockid_t = enum(u32) {
     // * place holder. Do not reuse!
     // Therefore, calling clock_gettime() with these IDs will result in an error.
     //
-    // Some backgrond:
+    // Some background:
     // - SGI_CYCLE was for Silicon Graphics (SGI) workstations,
     // which are probably no longer in use, so it makes sense to disable
     // - TAI_CLOCK was designed as CLOCK_REALTIME(UTC) + tai_offset,
@@ -5551,7 +5551,7 @@ pub const fanotify = struct {
         MODIFY: bool = false,
         /// Metadata changed
         ATTRIB: bool = false,
-        /// Writtable file closed
+        /// Writable file closed
         CLOSE_WRITE: bool = false,
         /// Unwrittable file closed
         CLOSE_NOWRITE: bool = false,
@@ -6470,7 +6470,7 @@ pub const IORING_RECVSEND_FIXED_BUF = 1 << 2;
 pub const IORING_SEND_ZC_REPORT_USAGE = 1 << 3;
 /// If set, send or recv will grab as many buffers from the buffer group ID given and send them all.
 /// The completion result will be the number of buffers send, with the starting buffer ID in cqe as per usual.
-/// The buffers be contigious from the starting buffer ID.
+/// The buffers be contiguous from the starting buffer ID.
 /// Used with IOSQE_BUFFER_SELECT.
 pub const IORING_RECVSEND_BUNDLE = 1 << 4;
 /// CQE.RES FOR IORING_CQE_F_NOTIF if IORING_SEND_ZC_REPORT_USAGE was requested
@@ -9325,7 +9325,7 @@ pub const perf_event_attr = extern struct {
 pub const perf_event_header = extern struct {
     /// Event type: sample/mmap/fork/etc.
     type: PERF.RECORD,
-    /// Additional informations on the event: kernel/user/hypervisor/etc.
+    /// Additional information on the event: kernel/user/hypervisor/etc.
     misc: packed struct(u16) {
         cpu_mode: PERF.RECORD.MISC.CPU_MODE,
         _: u9,
@@ -9364,7 +9364,7 @@ pub const perf_event_mmap_page = extern struct {
     time_running: u64,
     capabilities: packed struct(u64) {
         /// If kernel version < 3.12
-        /// this rapresents both user_rdpmc and user_time (user_rdpmc | user_time)
+        /// this represents both user_rdpmc and user_time (user_rdpmc | user_time)
         /// otherwise deprecated.
         bit0: bool,
         /// Set if bit0 is deprecated

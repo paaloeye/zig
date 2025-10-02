@@ -196,7 +196,7 @@ pub const Filesystem = union(enum) {
 
     /// Search for an executable named `name` using platform-specific logic
     /// If it's found, write the full path to `buf` and return a slice of it
-    /// Otherwise retun null
+    /// Otherwise return null
     pub fn findProgramByName(fs: Filesystem, allocator: std.mem.Allocator, name: []const u8, path: ?[]const u8, buf: []u8) ?[]const u8 {
         std.debug.assert(name.len > 0);
         return switch (fs) {

@@ -556,7 +556,7 @@ pub fn addrSpaceCastIsValid(
 /// this means that all such pointers have to be resolvable to a location at compile time, and places
 /// a number of restrictions on usage of such pointers. For example, a logical pointer may not be
 /// part of a merge (result of a branch) and may not be stored in memory at all. This function returns
-/// for a particular architecture and address space wether such pointers are logical.
+/// for a particular architecture and address space whether such pointers are logical.
 pub fn arePointersLogical(target: *const std.Target, as: AddressSpace) bool {
     if (target.os.tag != .vulkan) return false;
 

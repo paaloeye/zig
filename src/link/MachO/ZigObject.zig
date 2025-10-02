@@ -817,7 +817,7 @@ pub fn updateFunc(
     };
 
     if (debug_wip_nav) |*wip_nav| self.dwarf.?.finishWipNavFunc(pt, func.owner_nav, code.len, wip_nav) catch |err|
-        return macho_file.base.cgFail(func.owner_nav, "falied to finish dwarf function: {s}", .{@errorName(err)});
+        return macho_file.base.cgFail(func.owner_nav, "failed to finish dwarf function: {s}", .{@errorName(err)});
 
     // Exports will be updated by `Zcu.processExports` after the update.
     if (old_rva != new_rva and old_rva > 0) {
@@ -1018,7 +1018,7 @@ fn updateNavCode(
 }
 
 /// Lowering a TLV on macOS involves two stages:
-/// 1. first we lower the initializer into appopriate section (__thread_data or __thread_bss)
+/// 1. first we lower the initializer into appropriate section (__thread_data or __thread_bss)
 /// 2. next, we create a corresponding threadlocal variable descriptor in __thread_vars
 fn updateTlv(
     self: *ZigObject,

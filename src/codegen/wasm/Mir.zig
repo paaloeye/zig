@@ -64,7 +64,7 @@ pub const Inst = struct {
     /// For example, `data` will be an i32 for when `tag` is 'i32_const'.
     data: Data,
 
-    /// The position of a given MIR isntruction with the instruction list.
+    /// The position of a given MIR instruction with the instruction list.
     pub const Index = u32;
 
     /// Some tags match wasm opcode values to facilitate trivial lowering.
